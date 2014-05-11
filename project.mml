@@ -6,8 +6,8 @@
     85.0511
   ],
   "center": [
-    2.5,
-    48.8,
+    7.76,
+    48.58,
     15
   ],
   "format": "png8",
@@ -29,7 +29,7 @@
       ],
       "Datasource": {
         "type": "postgis",
-        "table": "(select * from cumul_adresses order by source) as addr",
+        "table": "(select geometrie, source, voie_osm from cumul_adresses order by source) as addr",
         "key_field": "",
         "geometry_field": "geometrie",
         "extent_cache": "custom",
@@ -40,13 +40,16 @@
         "dbname": "cadastre",
         "id": "addr",
         "project": "BANO",
-        "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
+        "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs",
+        "asynchronous_request": "true"
       },
       "id": "addr",
       "class": "",
       "srs-name": "WGS84",
       "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs",
-      "advanced": {},
+      "advanced": {
+        "asynchronous_request": "true"
+      },
       "name": "addr"
     },
     {
@@ -70,13 +73,16 @@
         "password": "m4d31nfr4nc3",
         "id": "addr_lz",
         "project": "BANO",
-        "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
+        "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs",
+        "asynchronous_request": "true"
       },
       "id": "addr_lz",
       "class": "",
       "srs-name": "WGS84",
       "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs",
-      "advanced": {},
+      "advanced": {
+        "asynchronous_request": "true"
+      },
       "name": "addr_lz"
     },
     {
@@ -100,13 +106,18 @@
         "password": "m4d31nfr4nc3",
         "id": "manque",
         "project": "BANO",
-        "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
+        "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs",
+        "encoding": "utf-8",
+        "asynchronous_request": "true"
       },
       "id": "manque",
       "class": "",
       "srs-name": "WGS84",
       "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs",
-      "advanced": {},
+      "advanced": {
+        "encoding": "utf-8",
+        "asynchronous_request": "true"
+      },
       "name": "manque"
     }
   ],
