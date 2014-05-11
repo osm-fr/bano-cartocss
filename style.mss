@@ -6,6 +6,7 @@ Map { buffer-size: 200; }
 
 @font: "DejaVu Sans Condensed";
 @osmColor: #0a0;
+@opendataColor: #Fb0;
 @cadastreColor: blue;
 
 #addr {
@@ -17,6 +18,7 @@ Map { buffer-size: 200; }
     marker-line-width: 0;
     marker-allow-overlap: true;
     [source='OSM'] { marker-fill: @osmColor; }
+    [source=~'^OD.*'] { marker-fill: @opendataColor; }
     [source='CADASTRE'] {
    	  marker-fill: @cadastreColor;
       [voie_osm=''] { marker-fill: red; } 
@@ -26,6 +28,7 @@ Map { buffer-size: 200; }
 	text-name: [numero];
     text-face-name: @font;
     [source='OSM'] { text-fill: @osmColor; }
+    [source=~'^OD.*'] { text-fill: @opendataColor; }
     [source='CADASTRE'] {
       text-fill: @cadastreColor;
       [voie_osm=''] { text-fill: red; } 
@@ -62,7 +65,7 @@ Map { buffer-size: 200; }
        text-fill: grey;
     }    
     [cadastre=0][nom_com!=''] {
-       text-name: [insee]+" - "+[nom_com]+"\nnon importé";
+       text-name: [insee]+" - "+[nom_com]+"\npas encore traité";
        text-fill: red;
     }
     [cadastre>0]{
