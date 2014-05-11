@@ -1,4 +1,4 @@
 bano-cartocss
 =============
 
-CortoCSS (TileMill) rendering of BANO database
+CartoCSS (TileMill) rendering of BANO database
