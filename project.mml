@@ -29,7 +29,7 @@
       ],
       "Datasource": {
         "type": "postgis",
-        "table": "(select geometrie, source, voie_osm from cumul_adresses order by source) as addr",
+        "table": "(select geometrie, source, voie_osm, numero from cumul_adresses order by source) as addr",
         "key_field": "",
         "geometry_field": "geometrie",
         "extent_cache": "custom",
