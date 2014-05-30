@@ -2,7 +2,7 @@
 autopilot 0.0.1
 [{"id":"Map","background-color":"#b8dee6"}]
 */
-Map { buffer-size: 200; }
+Map { buffer-size: 256; }
 
 @font: "DejaVu Sans Condensed";
 @osmColor: #0a0;
@@ -14,7 +14,8 @@ Map { buffer-size: 200; }
     marker-width: 0.5;
 	[zoom>=12] {marker-width: 1;}
 	[zoom>=13] {marker-width: 2;}
-	[zoom>=15] { opacity: 1; marker-width: 6;}
+	[zoom>=14] {marker-width: 3;}
+	[zoom>=15] { opacity: 1; marker-width: 5;}
     marker-line-width: 0;
     marker-allow-overlap: true;
     [source='OSM'] { marker-fill: @osmColor; }
@@ -42,6 +43,47 @@ Map { buffer-size: 200; }
     }
 }
 
+#fantoir [zoom>=12]{
+  [zoom>=10][format_cadastre='VECT'][zoom<13]
+  {
+    text-name: [nb];
+    text-face-name:@font;
+    text-size: 12;
+    text-halo-radius: 2;
+    text-allow-overlap:true;
+    [nb>0] { text-fill: red; }
+  }
+  [zoom>=13]
+  {
+    line-color: white;
+    line-dasharray: 4,8;
+    line-width: 3;
+    line-cap: round;
+    line-join: round;
+    line-opacity: 0.75;
+    
+    text-name: [insee]+" - "+[nom];
+    text-face-name:@font;
+    text-allow-overlap:true;
+    text-halo-radius: 3;
+    text-size: 14;
+    [nom=null],[format_cadastre!='VECT'] {
+       text-name: [insee]+" - "+[nom]+"\ncadastre non vectoriel";
+       text-fill: grey;
+    }
+    ::fantoir [format_cadastre='VECT'][nb>0]{
+	    text-name: "manque "+[nb]+" voies";
+        [nb=1] { text-name: "manque "+[nb]+" voie"; }
+	    text-face-name:@font;
+	    text-allow-overlap:true;
+	    text-halo-radius: 3;
+	    text-size: 14;
+		text-dy: 10;
+        text-fill: red;
+    }
+  }
+}
+
 #addr_lz [zoom>=12]{
   [zoom>=10][cadastre>0][zoom<13]
   {
@@ -53,18 +95,24 @@ Map { buffer-size: 200; }
   }
   [zoom>=13]
   {
-    line-color: grey;
+    line-color: white;
+    line-dasharray: 4,8;
+    line-width: 3;
+    line-cap: round;
+    line-join: round;
+    line-opacity: 0.75;
+    
     text-name: [insee]+" - "+[nom_com]+" "+[pourcent]+"%\n/";
     text-face-name:@font;
     text-allow-overlap:true;
     text-halo-radius: 3;
     text-size: 14;
     text-dy: -0.1;
-    [nom_com=null] {
-       text-name: [insee]+"\ncadastre non vectoriel";
+    [nom_com=null],[format_cadastre!='VECT'] {
+       text-name: [insee]+" - "+[nom_com]+"\ncadastre non vectoriel";
        text-fill: grey;
-    }    
-    [cadastre=0][nom_com!=''] {
+    }
+    [cadastre=0][format_cadastre='VECT'] {
        text-name: [insee]+" - "+[nom_com]+"\npas encore traité";
        text-fill: red;
     }
@@ -97,11 +145,15 @@ Map { buffer-size: 200; }
 }
 
 #manque [zoom>=16] {
+  polygon-clip: false;
+  polygon-opacity: 0;
+  polygon-smooth: 0.5;
   line-color: red;
   line-width: 10;
   line-clip: false;
   line-join: round;
   line-cap: round;
+  line-smooth: 0.5;
   line-offset: 10;
   line-opacity: 0.25;
   text-name: [voie_cadastre];
@@ -119,4 +171,12 @@ Map { buffer-size: 200; }
   b/text-size: 12;
   b/text-halo-radius: 3;
   b/text-halo-fill: fadeout(white,50%);
+  b/text-dy: 10; // décallage si pas assez de points pour avoir une surface (pour voir les points)
+  [zoom>=17] {
+    b/text-name: [voie_cadastre]+"\n"+[fantoir]+" ("+[nb]+")";
+  }
+  [zoom>=19] {
+    b/text-size: 16;
+  }
 }
+

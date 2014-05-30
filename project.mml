@@ -41,6 +41,7 @@
         "id": "addr",
         "project": "BANO",
         "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs",
+        "srid": "4326",
         "asynchronous_request": "true"
       },
       "id": "addr",
@@ -48,6 +49,7 @@
       "srs-name": "WGS84",
       "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs",
       "advanced": {
+        "srid": "4326",
         "asynchronous_request": "true"
       },
       "name": "addr"
@@ -62,7 +64,7 @@
       ],
       "Datasource": {
         "type": "postgis",
-        "table": "(select wkb_geometry, insee, nom_com, sum(case when source='OSM' then 1 else 0 end) as osm, sum(case when source='CADASTRE' then 1 else 0 end) as cadastre, 100*(sum(case when source='OSM' then 1 else 0 end)+1)/(sum(case when source='CADASTRE' then 1 else 0 end)+1) as pourcent from communes co left join code_cadastre ca on (ca.insee_com = co.insee) left join cumul_adresses cu on (ST_Contains(co.wkb_geometry, cu.geometrie) and cu.insee_com=co.insee) group by co.insee, ca.nom_com, co.wkb_geometry) as addr_lz",
+        "table": "(select wkb_geometry, insee, nom_com, format_cadastre, sum(case when source='OSM' then 1 else 0 end) as osm, sum(case when source='CADASTRE' then 1 else 0 end) as cadastre, 100*(sum(case when source='OSM' then 1 else 0 end)+1)/(sum(case when source='CADASTRE' then 1 else 0 end)+1) as pourcent from communes co left join code_cadastre ca on (ca.insee_com = co.insee) left join cumul_adresses cu on (cu.insee_com=co.insee) group by co.insee, ca.nom_com, co.wkb_geometry, format_cadastre) as addr_lz",
         "key_field": "",
         "geometry_field": "",
         "extent_cache": "custom",
@@ -74,6 +76,7 @@
         "id": "addr_lz",
         "project": "BANO",
         "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs",
+        "srid": "4326",
         "asynchronous_request": "true"
       },
       "id": "addr_lz",
@@ -81,12 +84,13 @@
       "srs-name": "WGS84",
       "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs",
       "advanced": {
+        "srid": "4326",
         "asynchronous_request": "true"
       },
-      "name": "addr_lz"
+      "name": "addr_lz",
+      "status": "off"
     },
     {
-      "geometry": "polygon",
       "extent": [
         -180,
         -85.051,
@@ -95,7 +99,7 @@
       ],
       "Datasource": {
         "type": "postgis",
-        "table": "(select st_convexhull(st_collect(cu.geometrie)) as poly, cu.voie_cadastre, count(*) as nb from communes co join cumul_adresses cu on (ST_Contains(co.wkb_geometry, cu.geometrie)) where cu.geometrie && !bbox! and cu.voie_osm='' group by cu.voie_cadastre) as manque",
+        "table": "(select cu.fantoir, cu.voie_cadastre, st_convexhull(st_collect(cu.geometrie)) as poly, count(*) as nb from communes co join cumul_adresses cu on (cu.insee_com=co.insee and cu.voie_osm='' and cu.source='CADASTRE') where co.wkb_geometry && st_setsrid(!bbox!,4326) group by cu.fantoir, cu.voie_cadastre) as manque",
         "key_field": "",
         "geometry_field": "poly",
         "extent_cache": "custom",
@@ -104,10 +108,10 @@
         "host": "88.191.250.198",
         "user": "layers",
         "password": "m4d31nfr4nc3",
-        "id": "manque",
-        "project": "BANO",
+        "id": "test",
+        "project": "bano-cartocss",
         "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs",
-        "encoding": "utf-8",
+        "srid": "4326",
         "asynchronous_request": "true"
       },
       "id": "manque",
@@ -115,16 +119,45 @@
       "srs-name": "WGS84",
       "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs",
       "advanced": {
-        "encoding": "utf-8",
+        "srid": "4326",
         "asynchronous_request": "true"
       },
       "name": "manque"
+    },
+    {
+      "extent": [
+        -180,
+        -85.051,
+        180,
+        85.051
+      ],
+      "Datasource": {
+        "type": "postgis",
+        "table": "(select wkb_geometry, nom, insee, count(*) as nb, format_cadastre from (select wkb_geometry, nom, insee, format_cadastre from communes left join cumul_adresses cu on (cu.insee_com=insee and source='CADASTRE' and (voie_osm is null or voie_osm = '')) left join code_cadastre ca on (ca.insee_com=insee) where wkb_geometry && st_setsrid(!bbox!,4326) group by wkb_geometry, nom, insee, format_cadastre, fantoir) as fantoir group by wkb_geometry, nom, insee, format_cadastre) as f",
+        "key_field": "",
+        "geometry_field": "wkb_geometry",
+        "extent_cache": "custom",
+        "extent": "-180,-90,180,90",
+        "dbname": "cadastre",
+        "host": "88.191.250.198",
+        "user": "layers",
+        "password": "m4d31nfr4nc3",
+        "id": "fantoir",
+        "project": "bano-cartocss",
+        "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"
+      },
+      "id": "fantoir",
+      "class": "",
+      "srs-name": "WGS84",
+      "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs",
+      "advanced": {},
+      "name": "fantoir"
     }
   ],
   "scale": 1,
-  "metatile": 2,
+  "metatile": 4,
   "_basemap": "examples.map-vyofok3q",
-  "name": "",
+  "name": "bano-cartocss",
   "description": "",
   "attribution": ""
 }
