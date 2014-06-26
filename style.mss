@@ -11,35 +11,46 @@ Map { buffer-size: 256; }
 
 #addr {
     opacity: 0.5;
-    marker-width: 0.5;
+    marker-width: 0.75;
+    marker-line-width: 0;
+    marker-allow-overlap: true;
+
+  /* couleur du point */ 
+  [source='S'] /* OSM */ {
+    	marker-fill: @osmColor;
+        [fant=''] { marker-fill: purple; } /* pas de rapprochement FANTOIR */
+    }
+    [source='D'] /* opendata */ { marker-fill: @opendataColor; }
+    [source='A'] /* CADASTRE */{
+   	  marker-fill: @cadastreColor;
+      [voie_o=''] { marker-fill: red; } /* pas de rapprochement OSM */
+    }
+  
+  /* taille en fonction du zoom */
 	[zoom>=12] {marker-width: 1;}
 	[zoom>=13] {marker-width: 2;}
 	[zoom>=14] {marker-width: 3;}
 	[zoom>=15] { opacity: 1; marker-width: 5;}
-    marker-line-width: 0;
-    marker-allow-overlap: true;
-    [source='OSM'] { marker-fill: @osmColor; }
-    [source=~'^OD.*'] { marker-fill: @opendataColor; }
-    [source='CADASTRE'] {
-   	  marker-fill: @cadastreColor;
-      [voie_osm=''] { marker-fill: red; } 
-    }
     [zoom>=18] {
     marker-width: 4;
+    /* rendu du numéro aux plus forts zooms */
+  /* couleur du numéro */ 
+  [source='S'] /* OSM */ {
+    	text-fill: @osmColor;
+        [fant=''] { text-fill: purple; } /* pas de rapprochement FANTOIR */
+    }
+    [source='D'] /* opendata */ { text-fill: @opendataColor; }
+    [source='A'] /* CADASTRE */{
+   	  text-fill: @cadastreColor;
+      [voie_o=''] { text-fill: red; } /* pas de rapprochement OSM */
+    }
 	text-name: [numero];
     text-face-name: @font;
-    [source='OSM'] { text-fill: @osmColor; }
-    [source=~'^OD.*'] { text-fill: @opendataColor; }
-    [source='CADASTRE'] {
-      text-fill: @cadastreColor;
-      [voie_osm=''] { text-fill: red; } 
-    }
 	text-size: 10;
     text-dy: -4;
-    [zoom>=19] { text-size: 12; }
     text-placement-type: simple;
     text-placements: "N,W,S,E,NW,NE,SE,SW";
-
+    [zoom>=19] { text-size: 12; }
     }
 }
 
@@ -51,6 +62,7 @@ Map { buffer-size: 256; }
     text-size: 12;
     text-halo-radius: 2;
     text-allow-overlap:true;
+    [min_fantoir = null][nb=1] { text-name: ''; }
     [nb>0] { text-fill: red; }
   }
   [zoom>=13]
@@ -74,12 +86,13 @@ Map { buffer-size: 256; }
     ::fantoir [format_cadastre='VECT'][nb>0]{
 	    text-name: "manque "+[nb]+" voies";
         [nb=1] { text-name: "manque "+[nb]+" voie"; }
-	    text-face-name:@font;
+        text-face-name:@font;
 	    text-allow-overlap:true;
 	    text-halo-radius: 3;
 	    text-size: 14;
 		text-dy: 10;
         text-fill: red;
+	    [min_fantoir = null][nb=1] { text-name: "";}
     }
   }
 }
@@ -156,10 +169,11 @@ Map { buffer-size: 256; }
   line-smooth: 0.5;
   line-offset: 10;
   line-opacity: 0.25;
-  text-name: [voie_cadastre];
+  text-name: [voie_cadastre]+[voie_osm];
   text-face-name: @font;
-  text-allow-overlap: true;
+  text-allow-overlap: false;
   text-placement: line;
+  text-spacing: 100;
   text-fill: red;
   text-size: 12;
   text-dy: 20;
@@ -168,15 +182,24 @@ Map { buffer-size: 256; }
   b/text-face-name: @font;
   b/text-allow-overlap: true;
   b/text-fill: red;
-  b/text-size: 12;
+  b/text-size: 14;
   b/text-halo-radius: 3;
   b/text-halo-fill: fadeout(white,50%);
   b/text-dy: 10; // décallage si pas assez de points pour avoir une surface (pour voir les points)
   [zoom>=17] {
     b/text-name: [voie_cadastre]+"\n"+[fantoir]+" ("+[nb]+")";
   }
-  [zoom>=19] {
+  [zoom>=18] {
     b/text-size: 16;
   }
+
+  [source='OSM'] /* OSM */ {
+    text-fill: purple;
+    line-color: purple;
+    b/text-fill: purple;
+    b/text-dy: 0;
+    b/text-name: [voie_osm]+" ("+[nb]+")";
+  }
+
 }
 

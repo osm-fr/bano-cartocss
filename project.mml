@@ -29,7 +29,7 @@
       ],
       "Datasource": {
         "type": "postgis",
-        "table": "(select geometrie, source, voie_osm, numero from cumul_adresses order by source) as addr",
+        "table": "(select geometrie, substr(source,2,1) as source, numero, substring(voie_osm,1,1) as voie_o, substring(fantoir,1,1) as fant from cumul_adresses order by source) as addr",
         "key_field": "",
         "geometry_field": "geometrie",
         "extent_cache": "custom",
@@ -99,7 +99,7 @@
       ],
       "Datasource": {
         "type": "postgis",
-        "table": "(select cu.fantoir, cu.voie_cadastre, st_convexhull(st_collect(cu.geometrie)) as poly, count(*) as nb from communes co join cumul_adresses cu on (cu.insee_com=co.insee and cu.voie_osm='' and cu.source='CADASTRE') where co.wkb_geometry && st_setsrid(!bbox!,4326) group by cu.fantoir, cu.voie_cadastre) as manque",
+        "table": "(select cu.fantoir, cu.voie_cadastre, cu.voie_osm, st_convexhull(st_collect(cu.geometrie)) as poly, count(*) as nb,cu.source  from communes co join cumul_adresses cu on (cu.insee_com=co.insee and ((cu.voie_osm='' and cu.source='CADASTRE') or (cu.fantoir='' and cu.source='OSM'))) where co.wkb_geometry && st_setsrid(!bbox!,4326) group by cu.fantoir, cu.voie_cadastre, cu.voie_osm, cu.source) as manque",
         "key_field": "",
         "geometry_field": "poly",
         "extent_cache": "custom",
@@ -122,7 +122,8 @@
         "srid": "4326",
         "asynchronous_request": "true"
       },
-      "name": "manque"
+      "name": "manque",
+      "geometry": "polygon"
     },
     {
       "extent": [
@@ -133,7 +134,7 @@
       ],
       "Datasource": {
         "type": "postgis",
-        "table": "(select wkb_geometry, nom, insee, count(*) as nb, format_cadastre from (select wkb_geometry, nom, insee, format_cadastre from communes left join cumul_adresses cu on (cu.insee_com=insee and source='CADASTRE' and (voie_osm is null or voie_osm = '')) left join code_cadastre ca on (ca.insee_com=insee) where wkb_geometry && st_setsrid(!bbox!,4326) group by wkb_geometry, nom, insee, format_cadastre, fantoir) as fantoir group by wkb_geometry, nom, insee, format_cadastre) as f",
+        "table": "(select wkb_geometry, nom, insee, count(*) as nb, format_cadastre, min(fantoir) as min_fantoir from (select wkb_geometry, nom, insee, format_cadastre, fantoir from communes left join cumul_adresses cu on (cu.insee_com=insee and source='CADASTRE' and (voie_osm is null or voie_osm = '')) left join code_cadastre ca on (ca.insee_com=insee) where wkb_geometry && st_setsrid(!bbox!,4326) group by wkb_geometry, nom, insee, format_cadastre, fantoir) as fantoir group by wkb_geometry, nom, insee, format_cadastre) as f",
         "key_field": "",
         "geometry_field": "wkb_geometry",
         "extent_cache": "custom",
@@ -144,13 +145,18 @@
         "password": "m4d31nfr4nc3",
         "id": "fantoir",
         "project": "bano-cartocss",
-        "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"
+        "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over",
+        "srid": "4326",
+        "asynchronous_request": "true"
       },
       "id": "fantoir",
       "class": "",
       "srs-name": "WGS84",
       "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs",
-      "advanced": {},
+      "advanced": {
+        "srid": "4326",
+        "asynchronous_request": "true"
+      },
       "name": "fantoir"
     }
   ],
