@@ -188,6 +188,7 @@ Map { buffer-size: 256; }
   b/text-dy: 10; // décallage si pas assez de points pour avoir une surface (pour voir les points)
   [zoom>=17] {
     b/text-name: [voie_cadastre]+"\n"+[fantoir]+" ("+[nb]+")";
+    b/text-character-spacing: 1;
   }
   [zoom>=18] {
     b/text-size: 16;
