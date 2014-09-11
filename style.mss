@@ -204,3 +204,13 @@ Map { buffer-size: 256; }
 
 }
 
+#lieuxdits [zoom>=15] {
+  text-name: [libelle_cadastre];
+  [zoom>=17] {text-name: [libelle_cadastre]+"\n"+[fantoir]; }
+  text-face-name: "DejaVu Sans Mono Oblique";
+  text-fill: #666;
+  text-size: 12;
+  text-wrap-width: 40;
+  text-allow-overlap: true;
+  text-halo-radius: 1;
+}
