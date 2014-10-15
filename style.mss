@@ -27,10 +27,10 @@ Map { buffer-size: 256; }
     }
   
   /* taille en fonction du zoom */
-	[zoom>=12] {marker-width: 1;}
-	[zoom>=13] {marker-width: 2;}
-	[zoom>=14] {marker-width: 3;}
-	[zoom>=15] { opacity: 1; marker-width: 5;}
+	[zoom>=12] {marker-width: 1; [source='A'][voie_o='']{marker-width: 1.5;}}
+	[zoom>=13] {marker-width: 2; [source='A'][voie_o='']{marker-width: 3;}}
+	[zoom>=14] {marker-width: 3; [source='A'][voie_o='']{marker-width: 4;}}
+	[zoom>=15] { opacity: 1; marker-width: 5; [source='A'][voie_o='']{marker-width: 7;}}
     [zoom>=18] {
     marker-width: 4;
     /* rendu du numéro aux plus forts zooms */
@@ -84,8 +84,8 @@ Map { buffer-size: 256; }
        text-fill: grey;
     }
     ::fantoir [format_cadastre='VECT'][nb>0]{
-	    text-name: "manque "+[nb]+" voies";
-        [nb=1] { text-name: "manque "+[nb]+" voie"; }
+	    text-name: [nb]+" voies d'écart";
+        [nb=1] { text-name: [nb]+" voie d'écart"; }
         text-face-name:@font;
 	    text-allow-overlap:true;
 	    text-halo-radius: 3;

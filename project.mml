@@ -195,7 +195,6 @@
   ],
   "scale": 1,
   "metatile": 4,
-  "_basemap": "examples.map-vyofok3q",
   "name": "bano-cartocss",
   "description": "",
   "attribution": ""
