@@ -201,7 +201,14 @@ Map { buffer-size: 256; }
     b/text-dy: 0;
     b/text-name: [voie_osm]+" ("+[nb]+")";
   }
-
+  
+  /* libellé rue et erreur signalée affichés en gris */
+  [label_statut!=''] {
+    text-fill: grey;
+    b/text-fill: grey;
+    line-color: grey;
+    [zoom>=17] { b/text-name: [voie_cadastre]+"\n"+[fantoir]+"\n("+[label_statut]+")"; }
+  }
 }
 
 #lieuxdits [zoom>=15] {
@@ -213,4 +220,23 @@ Map { buffer-size: 256; }
   text-wrap-width: 40;
   text-allow-overlap: true;
   text-halo-radius: 1;
+}
+
+
+#voies [zoom>=14]{
+  marker-width:6;
+  marker-fill:cyan;
+  marker-line-color:cyan;
+  marker-allow-overlap:true;
+  marker-ignore-placement:true;
+  [zoom>=16] {
+    text-name: [voie_osm];
+    [zoom>=17] { text-name: [voie_osm]+"\n"+[fantoir]; }
+    text-face-name: @font;
+    text-allow-overlap: true;
+    text-fill: black;
+    text-size: 12;
+    text-halo-radius: 1;
+    text-dy: 6;
+  }
 }

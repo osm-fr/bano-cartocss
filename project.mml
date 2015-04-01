@@ -99,7 +99,7 @@
       ],
       "Datasource": {
         "type": "postgis",
-        "table": "(select cu.fantoir, cu.voie_cadastre, cu.voie_osm, st_convexhull(st_collect(cu.geometrie)) as poly, count(*) as nb,cu.source  from communes co join cumul_adresses cu on (cu.insee_com=co.insee and ((cu.voie_osm='' and cu.source='CADASTRE') or (cu.fantoir='' and cu.source='OSM'))) where co.wkb_geometry && st_setsrid(!bbox!,4326) group by cu.fantoir, cu.voie_cadastre, cu.voie_osm, cu.source) as manque",
+        "table": "(select cu.fantoir, cu.voie_cadastre, cu.voie_osm, st_convexhull(st_collect(cu.geometrie)) as poly, count(*) as nb,cu.source, l.label_statut from communes co join cumul_adresses cu on (cu.insee_com=co.insee and ((cu.voie_osm='' and cu.source='CADASTRE') or (cu.fantoir='' and cu.source='OSM'))) left join statut_fantoir s on (s.fantoir=cu.fantoir) left join labels_statuts_fantoir l on (l.id_statut=s.id_statut) where co.wkb_geometry && st_setsrid(!bbox!,4326) group by cu.fantoir, cu.voie_cadastre, cu.voie_osm, cu.source, l.label_statut) as manque",
         "key_field": "",
         "geometry_field": "poly",
         "extent_cache": "custom",
@@ -124,6 +124,36 @@
       },
       "name": "manque",
       "geometry": "polygon"
+    },
+    {
+      "geometry": "point",
+      "extent": [
+        -61.806943,
+        -21.387503,
+        55.829704,
+        51.086385
+      ],
+      "Datasource": {
+        "type": "postgis",
+        "table": "(select v.* from cumul_voies v left join cumul_adresses a on (a.fantoir=v.fantoir) where a.fantoir is null) as voies",
+        "key_field": "",
+        "geometry_field": "geometrie",
+        "extent_cache": "auto",
+        "extent": "-61.806943,-21.387503,55.829704,51.086385",
+        "dbname": "cadastre",
+        "host": "88.191.250.198",
+        "user": "layers",
+        "password": "m4d31nfr4nc3",
+        "id": "voies",
+        "project": "bano-cartocss",
+        "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
+      },
+      "id": "voies",
+      "class": "",
+      "srs-name": "WGS84",
+      "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs",
+      "advanced": {},
+      "name": "voies"
     },
     {
       "extent": [
