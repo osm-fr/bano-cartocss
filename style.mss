@@ -48,6 +48,7 @@ Map { buffer-size: 256; }
     text-face-name: @font;
 	text-size: 10;
     text-dy: -4;
+    text-dx: 4;
     text-placement-type: simple;
     text-placements: "N,W,S,E,NW,NE,SE,SW";
     [zoom>=19] { text-size: 12; }
@@ -67,12 +68,18 @@ Map { buffer-size: 256; }
   }
   [zoom>=13]
   {
-    line-color: white;
-    line-dasharray: 4,8;
-    line-width: 3;
+    line-color: black;
+    line-width: 2;
     line-cap: round;
     line-join: round;
     line-opacity: 0.75;
+    
+    b/line-color: white;
+    b/line-dasharray: 4,8;
+    b/line-width: 3;
+    b/line-cap: round;
+    b/line-join: round;
+    b/line-opacity: 0.75;
     
     text-name: [insee]+" - "+[nom];
     text-face-name:@font;
@@ -211,10 +218,14 @@ Map { buffer-size: 256; }
   }
 }
 
-#lieuxdits [zoom>=15] {
-  text-name: [libelle_cadastre];
+#lieuxdits
+[zoom>=15]
+{
+  text-name: "";
+  [ld_bati=0],[zoom>=16] { text-name: [libelle_cadastre]; }
   [zoom>=17] {text-name: [libelle_cadastre]+"\n"+[fantoir]; }
   text-face-name: "DejaVu Sans Mono Oblique";
+  [ld_bati=0] { text-face-name: "DejaVu Sans Mono Bold"; }
   text-fill: #666;
   text-size: 12;
   text-wrap-width: 40;
@@ -238,5 +249,27 @@ Map { buffer-size: 256; }
     text-size: 12;
     text-halo-radius: 1;
     text-dy: 6;
+  }
+}
+
+
+#ban [zoom>=14]{ /* couche des données BAN ODbL */
+  marker-width:4;
+  marker-fill: grey;
+  marker-line-width: 0;
+  marker-allow-overlap:true;
+  marker-ignore-placement:true;
+  [zoom>=17] {
+	text-name: [num];
+    text-face-name: @font;
+    [nom_voie=''], [numero > 5000], [numero=0] {text-face-name: "DejaVu Sans Mono Oblique";} 
+    text-fill: grey;
+	text-size: 10;
+    text-dy: -4;
+    text-dx: 4;
+    text-placement-type: simple;
+    text-placements: "E,W,N,S,E,NW,NE,SE,SW";
+    text-halo-radius: 1;
+    [zoom>=19] { text-size: 12; }
   }
 }
