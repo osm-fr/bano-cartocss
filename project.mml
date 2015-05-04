@@ -6,9 +6,9 @@
     85.0511
   ],
   "center": [
-    2.5,
-    48.8,
-    15
+    1.4505,
+    43.5886,
+    20
   ],
   "format": "png8",
   "interactivity": false,
@@ -29,7 +29,7 @@
       ],
       "Datasource": {
         "type": "postgis",
-        "table": "(select wkb_geometry, nom_voie, numero::numeric as numero, trim(numero||' '||coalesce(rep,'')) as num from ban) as ban",
+        "table": "(select wkb_geometry, nom_voie, numero::numeric as numero, trim(numero||' '||coalesce(rep,'')) as num, coalesce(v.fantoir,'') as fantoir from ban b left join cumul_voies v on (v.insee_com=b.code_insee and v.fantoir like b.code_insee||left(b.fant_voie||'xxxx',4)||'%') ) as ban",
         "key_field": "",
         "geometry_field": "",
         "extent_cache": "custom",
@@ -43,7 +43,10 @@
       "class": "",
       "srs-name": "WGS84",
       "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs",
-      "advanced": {},
+      "advanced": {
+        "srid": "4326",
+        "asynchronous_request": "true"
+      },
       "name": "ban"
     },
     {
@@ -116,6 +119,33 @@
       },
       "name": "addr_lz",
       "status": "off"
+    },
+    {
+      "geometry": "point",
+      "extent": [
+        -180,
+        -85,
+        180,
+        85
+      ],
+      "Datasource": {
+        "type": "postgis",
+        "table": "(select b.nom_voie, coalesce(b.code_insee||b.fant_voie||f.cle_rivoli,'') as fant_voie, b.code_insee, st_convexhull(st_collect(b.wkb_geometry)) as wkb_geometry, count(*) as nb from communes c join ban b on (b.wkb_geometry && c.wkb_geometry and b.code_insee=c.insee) left join cumul_voies v on (v.insee_com=b.code_insee and v.fantoir LIKE b.code_insee||b.fant_voie||'%') left join fantoir_voie f on (f.code_insee=b.code_insee and f.id_voie=b.fant_voie) where b.numero!='0' and b.numero::numeric<5000 and b.nom_voie!='' and v.fantoir is null and c.wkb_geometry && st_setsrid(!bbox!,4326) group by 1,2,3) as manque_ban\n",
+        "key_field": "",
+        "geometry_field": "",
+        "extent_cache": "custom",
+        "extent": "-180,-85,180,85",
+        "dbname": "cadastre",
+        "host": "88.191.250.198",
+        "user": "layers",
+        "password": "m4d31nfr4nc3"
+      },
+      "id": "manque_ban",
+      "class": "",
+      "srs-name": "WGS84",
+      "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs",
+      "advanced": {},
+      "name": "manque_ban"
     },
     {
       "extent": [

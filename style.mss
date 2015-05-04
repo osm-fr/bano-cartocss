@@ -5,6 +5,7 @@ autopilot 0.0.1
 Map { buffer-size: 256; }
 
 @font: "DejaVu Sans Condensed";
+@oblique: "DejaVu Sans Condensed Oblique";
 @osmColor: #0a0;
 @opendataColor: #Fb0;
 @cadastreColor: blue;
@@ -259,6 +260,7 @@ Map { buffer-size: 256; }
   marker-line-width: 0;
   marker-allow-overlap:true;
   marker-ignore-placement:true;
+  [fantoir=''] {marker-width:6;} 
   [zoom>=17] {
 	text-name: [num];
     text-face-name: @font;
@@ -272,4 +274,49 @@ Map { buffer-size: 256; }
     text-halo-radius: 1;
     [zoom>=19] { text-size: 12; }
   }
+}
+
+
+#manque_ban [zoom>=16] {
+  polygon-clip: false;
+  polygon-opacity: 0;
+  polygon-smooth: 0.5;
+  line-color: red;
+  line-dasharray: 6,16;
+  line-width: 8;
+  line-clip: false;
+  line-join: round;
+  line-cap: round;
+  line-smooth: 0.5;
+  line-offset: 10;
+  line-opacity: 0.5;
+  text-name: [nom_voie];
+  text-face-name: @oblique;
+  text-allow-overlap: false;
+  text-placement: line;
+  text-spacing: 100;
+  text-fill: red;
+  text-size: 12;
+  text-dy: 20;
+  b/text-name: [nom_voie]+'\n**'+[fant_voie]+'**';
+  b/text-face-name: @oblique;
+  b/text-allow-overlap: true;
+  b/text-fill: red;
+  b/text-size: 14;
+  b/text-halo-radius: 3;
+  b/text-halo-fill: fadeout(white,50%);
+  b/text-dy: 10; // décallage si pas assez de points pour avoir une surface (pour voir les points)
+  [fant_voie=''] {
+    b/text-name: [nom_voie];
+    line-color: grey;
+    text-fill: grey;
+    b/text-fill: grey;
+  }
+  [zoom>=18] {
+    text-size: 16;
+    b/text-size: 16;
+    text-halo-radius: 1;
+    text-halo-fill: fadeout(white,50%);
+  }
+
 }
