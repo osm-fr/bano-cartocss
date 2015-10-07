@@ -6,9 +6,9 @@
     85.0511
   ],
   "center": [
-    1.4505,
-    43.5886,
-    20
+    5.332,
+    45.16175,
+    18
   ],
   "format": "png8",
   "interactivity": false,
@@ -156,7 +156,7 @@
       ],
       "Datasource": {
         "type": "postgis",
-        "table": "(select cu.fantoir, cu.voie_cadastre, cu.voie_osm, st_convexhull(st_collect(cu.geometrie)) as poly, count(*) as nb,cu.source, l.label_statut from communes co join cumul_adresses cu on (cu.insee_com=co.insee and ((cu.voie_osm='' and cu.source='CADASTRE') or (cu.fantoir='' and cu.source='OSM'))) left join statut_fantoir s on (s.fantoir=cu.fantoir) left join labels_statuts_fantoir l on (l.id_statut=s.id_statut) where co.wkb_geometry && st_setsrid(!bbox!,4326) group by cu.fantoir, cu.voie_cadastre, cu.voie_osm, cu.source, l.label_statut) as manque",
+        "table": "(SELECT cu.fantoir, cu.voie_cadastre, cu.voie_osm, st_convexhull(st_collect(cu.geometrie)) as poly, count(*) as nb,cu.source, l.label_statut\nFROM communes co\nJOIN cumul_adresses cu on (cu.insee_com=co.insee and ((cu.voie_osm='' and cu.source='CADASTRE') or (cu.fantoir='' and cu.source='OSM')))\nJOIN fantoir_voie f on (f.fantoir=left(cu.fantoir,9) and f.date_annul='0000000')\nLEFT JOIN statut_fantoir s on (s.fantoir=cu.fantoir)\nLEFT JOIN labels_statuts_fantoir l on (l.id_statut=s.id_statut)\nWHERE co.wkb_geometry && st_setsrid(!bbox!,4326)\nGROUP BY cu.fantoir, cu.voie_cadastre, cu.voie_osm, cu.source, l.label_statut) as manque",
         "key_field": "",
         "geometry_field": "poly",
         "extent_cache": "custom",
@@ -180,7 +180,7 @@
         "asynchronous_request": "true"
       },
       "name": "manque",
-      "geometry": "polygon"
+      "geometry": "unknown"
     },
     {
       "geometry": "point",
@@ -282,6 +282,7 @@
   ],
   "scale": 1,
   "metatile": 4,
+  "_basemap": "",
   "name": "bano-cartocss",
   "description": "",
   "attribution": ""
