@@ -193,7 +193,7 @@ Map { buffer-size: 256; }
   b/text-size: 14;
   b/text-halo-radius: 3;
   b/text-halo-fill: fadeout(white,50%);
-  b/text-dy: 10; // décallage si pas assez de points pour avoir une surface (pour voir les points)
+  b/text-dy: 8; // décallage si pas assez de points pour avoir une surface (pour voir les points)
   [zoom>=17] {
     b/text-name: [voie_cadastre]+"\n"+[fantoir]+" ("+[nb]+")";
     b/text-character-spacing: 1;
@@ -305,7 +305,7 @@ Map { buffer-size: 256; }
   b/text-size: 14;
   b/text-halo-radius: 3;
   b/text-halo-fill: fadeout(white,50%);
-  b/text-dy: 10; // décallage si pas assez de points pour avoir une surface (pour voir les points)
+  b/text-dy: -8; // décallage si pas assez de points pour avoir une surface (pour voir les points)
   [fant_voie=''] {
     b/text-name: [nom_voie];
     line-color: grey;
