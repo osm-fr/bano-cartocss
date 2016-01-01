@@ -223,8 +223,14 @@ Map { buffer-size: 256; }
 [zoom>=15]
 {
   text-name: "";
-  [ld_bati=0],[zoom>=16] { text-name: [libelle_cadastre]; }
-  [zoom>=17] {text-name: [libelle_cadastre]+"\n"+[fantoir]; }
+  [ld_bati=0],[zoom>=16] {
+    text-name: [libelle_cadastre];
+    [source='OSM'] {text-name: [libelle_osm]; }
+  }
+  [zoom>=17] {
+    text-name: [libelle_cadastre]+"\n"+[fantoir];
+    [source='OSM'] {text-name: [libelle_osm]+"\n"+[fantoir]; }
+  }
   text-face-name: "DejaVu Sans Mono Oblique";
   [ld_bati=0] { text-face-name: "DejaVu Sans Mono Bold"; }
   text-fill: #666;
@@ -232,6 +238,14 @@ Map { buffer-size: 256; }
   text-wrap-width: 40;
   text-allow-overlap: true;
   text-halo-radius: 1;
+  [source='OSM'] /* OSM */ {
+    text-fill: @osmColor;
+    [fantoir=''] { text-fill: purple; } /* pas de rapprochement FANTOIR */
+    }
+    [source='CADASTRE'] /* CADASTRE */{
+   	  text-fill: @cadastreColor;
+      [libelle_osm=''] { text-fill: red; } /* pas de rapprochement OSM */
+    }
 }
 
 

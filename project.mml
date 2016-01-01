@@ -6,8 +6,8 @@
     85.0511
   ],
   "center": [
-    5.332,
-    45.16175,
+    3.4018,
+    47.8511,
     18
   ],
   "format": "png8",
@@ -59,7 +59,7 @@
       ],
       "Datasource": {
         "type": "postgis",
-        "table": "(select geometrie, substr(source,2,1) as source, numero, substring(voie_osm,1,1) as voie_o, substring(fantoir,1,1) as fant from cumul_adresses order by source) as addr",
+        "table": "(select geometrie, substr(source,2,1) as source, numero, substring(coalesce(voie_osm,''),1,1) as voie_o, substring(fantoir,1,1) as fant from cumul_adresses order by source) as addr",
         "key_field": "",
         "geometry_field": "geometrie",
         "extent_cache": "custom",
@@ -156,7 +156,7 @@
       ],
       "Datasource": {
         "type": "postgis",
-        "table": "(SELECT cu.fantoir, cu.voie_cadastre, cu.voie_osm, st_convexhull(st_collect(cu.geometrie)) as poly, count(*) as nb,cu.source, l.label_statut\nFROM communes co\nJOIN cumul_adresses cu on (cu.insee_com=co.insee and ((cu.voie_osm='' and cu.source='CADASTRE') or (cu.fantoir='' and cu.source='OSM')))\nJOIN fantoir_voie f on (f.fantoir=left(cu.fantoir,9) and f.date_annul='0000000')\nLEFT JOIN statut_fantoir s on (s.fantoir=cu.fantoir)\nLEFT JOIN labels_statuts_fantoir l on (l.id_statut=s.id_statut)\nWHERE co.wkb_geometry && st_setsrid(!bbox!,4326)\nGROUP BY cu.fantoir, cu.voie_cadastre, cu.voie_osm, cu.source, l.label_statut) as manque",
+        "table": "(SELECT cu.fantoir, cu.voie_cadastre, coalesce(cu.voie_osm,'') as voie_osm, st_convexhull(st_collect(cu.geometrie)) as poly, count(*) as nb,cu.source, l.label_statut\nFROM communes co\nJOIN cumul_adresses cu on (cu.insee_com=co.insee and ((coalesce(cu.voie_osm,'')='' and cu.source='CADASTRE') or (cu.fantoir='' and cu.source='OSM')))\nJOIN fantoir_voie f on (f.fantoir=left(cu.fantoir,9) and f.date_annul='0000000')\nLEFT JOIN statut_fantoir s on (s.fantoir=cu.fantoir)\nLEFT JOIN labels_statuts_fantoir l on (l.id_statut=s.id_statut)\nWHERE co.wkb_geometry && st_setsrid(!bbox!,4326)\nGROUP BY cu.fantoir, cu.voie_cadastre, cu.voie_osm, cu.source, l.label_statut) as manque",
         "key_field": "",
         "geometry_field": "poly",
         "extent_cache": "custom",
@@ -221,7 +221,7 @@
       ],
       "Datasource": {
         "type": "postgis",
-        "table": "(select wkb_geometry, nom, insee, count(*) as nb, format_cadastre, min(fantoir) as min_fantoir from (select wkb_geometry, nom, insee, format_cadastre, fantoir from communes left join cumul_adresses cu on (cu.insee_com=insee and source='CADASTRE' and (voie_osm is null or voie_osm = '')) left join code_cadastre ca on (ca.insee_com=insee) where wkb_geometry && st_setsrid(!bbox!,4326) group by wkb_geometry, nom, insee, format_cadastre, fantoir) as fantoir group by wkb_geometry, nom, insee, format_cadastre) as f",
+        "table": "(select wkb_geometry, nom, insee, count(*) as nb, format_cadastre, min(fantoir) as min_fantoir from (select wkb_geometry, nom, insee, format_cadastre, fantoir from communes left join cumul_adresses cu on (cu.insee_com=insee and source='CADASTRE' and (coalesce(voie_osm,'')='')) left join code_cadastre ca on (ca.insee_com=insee) where wkb_geometry && st_setsrid(!bbox!,4326) group by wkb_geometry, nom, insee, format_cadastre, fantoir) as fantoir group by wkb_geometry, nom, insee, format_cadastre) as f",
         "key_field": "",
         "geometry_field": "wkb_geometry",
         "extent_cache": "custom",
@@ -256,7 +256,7 @@
       ],
       "Datasource": {
         "type": "postgis",
-        "table": "(select geometrie, libelle_cadastre, fantoir, ld_bati from cumul_places) as place",
+        "table": "(select geometrie, libelle_cadastre, coalesce(libelle_osm,'') as libelle_osm, fantoir, ld_bati, source from cumul_places order by source) as place",
         "key_field": "",
         "geometry_field": "geometrie",
         "extent_cache": "custom",
