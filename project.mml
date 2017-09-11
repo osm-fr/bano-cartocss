@@ -29,6 +29,36 @@
       ],
       "Datasource": {
         "type": "postgis",
+        "table": "(select wkb_geometry, typeadressage, voie, numero::numeric as numero, trim(numero||' '||coalesce(repetition,'')) as num, coalesce(commune||rivoli,'') as fantoir from adresses_dgfip) as dgfip",
+        "key_field": "",
+        "geometry_field": "wkb_geometry",
+        "extent_cache": "custom",
+        "extent": "-180,-85,180,85",
+        "dbname": "cadastre",
+        "host": "88.191.250.198",
+        "user": "layers",
+        "password": "m4d31nfr4nc3"
+      },
+      "id": "dgfip",
+      "class": "",
+      "srs-name": "WGS84",
+      "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs",
+      "advanced": {
+        "srid": "4326",
+        "asynchronous_request": "true"
+      },
+      "name": "dgfip"
+    },
+    {
+      "geometry": "point",
+      "extent": [
+        -180,
+        -85,
+        180,
+        85
+      ],
+      "Datasource": {
+        "type": "postgis",
         "table": "(select wkb_geometry, nom_voie, numero::numeric as numero, trim(numero||' '||coalesce(rep,'')) as num, coalesce(v.fantoir,'') as fantoir from ban b left join cumul_voies v on (v.insee_com=b.code_insee and v.fantoir like b.code_insee||left(b.fant_voie||'xxxx',4)||'%') ) as ban",
         "key_field": "",
         "geometry_field": "",

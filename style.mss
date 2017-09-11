@@ -16,7 +16,7 @@ Map { buffer-size: 256; }
     marker-line-width: 0;
     marker-allow-overlap: true;
 
-  /* couleur du point */ 
+  /* couleur du point */
   [source='S'] /* OSM */ {
     	marker-fill: @osmColor;
         [fant=''] { marker-fill: purple; } /* pas de rapprochement FANTOIR */
@@ -26,7 +26,7 @@ Map { buffer-size: 256; }
    	  marker-fill: @cadastreColor;
       [voie_o=''] { marker-fill: red; } /* pas de rapprochement OSM */
     }
-  
+
   /* taille en fonction du zoom */
 	[zoom>=12] {marker-width: 1; [source='A'][voie_o='']{marker-width: 1.5;}}
 	[zoom>=13] {marker-width: 2; [source='A'][voie_o='']{marker-width: 3;}}
@@ -35,7 +35,7 @@ Map { buffer-size: 256; }
     [zoom>=18] {
     marker-width: 4;
     /* rendu du numéro aux plus forts zooms */
-  /* couleur du numéro */ 
+  /* couleur du numéro */
   [source='S'] /* OSM */ {
     	text-fill: @osmColor;
         [fant=''] { text-fill: purple; } /* pas de rapprochement FANTOIR */
@@ -74,14 +74,14 @@ Map { buffer-size: 256; }
     line-cap: round;
     line-join: round;
     line-opacity: 0.75;
-    
+
     b/line-color: white;
     b/line-dasharray: 4,8;
     b/line-width: 3;
     b/line-cap: round;
     b/line-join: round;
     b/line-opacity: 0.75;
-    
+
     text-name: [insee]+" - "+[nom];
     text-face-name:@font;
     text-allow-overlap:true;
@@ -122,7 +122,7 @@ Map { buffer-size: 256; }
     line-cap: round;
     line-join: round;
     line-opacity: 0.75;
-    
+
     text-name: [insee]+" - "+[nom_com]+" "+[pourcent]+"%\n/";
     text-face-name:@font;
     text-allow-overlap:true;
@@ -149,7 +149,7 @@ Map { buffer-size: 256; }
     text-size: 12;
     text-horizontal-alignment: right;
     }
-  
+
     ::osm {
     text-name: "osm: "+[osm];
     text-face-name:@font;
@@ -209,7 +209,7 @@ Map { buffer-size: 256; }
     b/text-dy: 0;
     b/text-name: [voie_osm]+" ("+[nb]+")";
   }
-  
+
   /* libellé rue et erreur signalée affichés en gris */
   [label_statut!=''] {
     text-fill: grey;
@@ -274,11 +274,11 @@ Map { buffer-size: 256; }
   marker-line-width: 0;
   marker-allow-overlap:true;
   marker-ignore-placement:true;
-  [fantoir=''] {marker-width:6;} 
+  [fantoir=''] {marker-width:6;}
   [zoom>=17] {
 	text-name: [num];
     text-face-name: @font;
-    [nom_voie=''], [numero > 5000], [numero=0] {text-face-name: "DejaVu Sans Mono Oblique";} 
+    [nom_voie=''], [numero > 5000], [numero=0] {text-face-name: "DejaVu Sans Mono Oblique";}
     text-fill: grey;
 	text-size: 10;
     text-dy: -4;
@@ -290,6 +290,27 @@ Map { buffer-size: 256; }
   }
 }
 
+#dgfip [zoom>=14]{ /* couche des données DGFiP */
+  marker-width:4;
+  marker-fill: purple;
+  marker-line-width: 0;
+  marker-allow-overlap:true;
+  marker-ignore-placement:true;
+  [fantoir=''] {marker-width:6;}
+  [zoom>=17] {
+	text-name: [num];
+    text-face-name: @font;
+    [typeadressage='fictif'] {text-face-name: "DejaVu Sans Mono Oblique";}
+    text-fill: purple;
+	text-size: 10;
+    text-dy: -4;
+    text-dx: 4;
+    text-placement-type: simple;
+    text-placements: "E,W,N,S,E,NW,NE,SE,SW";
+    text-halo-radius: 1;
+    [zoom>=19] { text-size: 12; }
+  }
+}
 
 #manque_ban [zoom>=16] {
   polygon-clip: false;
