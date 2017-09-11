@@ -11,49 +11,49 @@ Map { buffer-size: 256; }
 @cadastreColor: blue;
 
 #addr {
-    opacity: 0.5;
-    marker-width: 0.75;
-    marker-line-width: 0;
-    marker-allow-overlap: true;
+  opacity: 0.5;
+  marker-width: 0.75;
+  marker-line-width: 0;
+  marker-allow-overlap: true;
 
   /* couleur du point */
   [source='S'] /* OSM */ {
-    	marker-fill: @osmColor;
-        [fant=''] { marker-fill: purple; } /* pas de rapprochement FANTOIR */
-    }
-    [source='D'] /* opendata */ { marker-fill: @opendataColor; }
-    [source='A'] /* CADASTRE */{
-   	  marker-fill: @cadastreColor;
-      [voie_o=''] { marker-fill: red; } /* pas de rapprochement OSM */
-    }
+  	marker-fill: @osmColor;
+    [fant=''] { marker-fill: purple; } /* pas de rapprochement FANTOIR */
+  }
+  [source='D'] /* opendata */ { marker-fill: @opendataColor; }
+  [source='A'] /* CADASTRE */ {
+    marker-fill: @cadastreColor;
+    [voie_o=''] { marker-fill: red; } /* pas de rapprochement OSM */
+  }
 
   /* taille en fonction du zoom */
 	[zoom>=12] {marker-width: 1; [source='A'][voie_o='']{marker-width: 1.5;}}
 	[zoom>=13] {marker-width: 2; [source='A'][voie_o='']{marker-width: 3;}}
 	[zoom>=14] {marker-width: 3; [source='A'][voie_o='']{marker-width: 4;}}
 	[zoom>=15] { opacity: 1; marker-width: 5; [source='A'][voie_o='']{marker-width: 7;}}
-    [zoom>=18] {
+  [zoom>=18] {
     marker-width: 4;
     /* rendu du numéro aux plus forts zooms */
-  /* couleur du numéro */
-  [source='S'] /* OSM */ {
+    /* couleur du numéro */
+    [source='S'] /* OSM */ {
     	text-fill: @osmColor;
-        [fant=''] { text-fill: purple; } /* pas de rapprochement FANTOIR */
+      [fant=''] { text-fill: purple; } /* pas de rapprochement FANTOIR */
     }
     [source='D'] /* opendata */ { text-fill: @opendataColor; }
     [source='A'] /* CADASTRE */{
    	  text-fill: @cadastreColor;
       [voie_o=''] { text-fill: red; } /* pas de rapprochement OSM */
     }
-	text-name: [numero];
+	  text-name: [numero];
     text-face-name: @font;
-	text-size: 10;
+	  text-size: 10;
     text-dy: -4;
     text-dx: 4;
     text-placement-type: simple;
     text-placements: "N,W,S,E,NW,NE,SE,SW";
     [zoom>=19] { text-size: 12; }
-    }
+  }
 }
 
 #fantoir [zoom>=12]{
@@ -93,13 +93,13 @@ Map { buffer-size: 256; }
     }
     ::fantoir [format_cadastre='VECT'][nb>0]{
 	    text-name: [nb]+" voies d'écart";
-        [nb=1] { text-name: [nb]+" voie d'écart"; }
-        text-face-name:@font;
+      [nb=1] { text-name: [nb]+" voie d'écart"; }
+      text-face-name:@font;
 	    text-allow-overlap:true;
 	    text-halo-radius: 3;
 	    text-size: 14;
-		text-dy: 10;
-        text-fill: red;
+	  	text-dy: 10;
+      text-fill: red;
 	    [min_fantoir = null][nb=1] { text-name: "";}
     }
   }
@@ -138,29 +138,29 @@ Map { buffer-size: 256; }
        text-fill: red;
     }
     [cadastre>0]{
-    ::cadastre {
-    text-name: "cadastre: "+[cadastre];
-    text-face-name:@font;
-    text-allow-overlap:true;
-    text-fill: @cadastreColor;
-    text-dx: 4;
-    text-dy: -0.1;
-    text-halo-radius: 3;
-    text-size: 12;
-    text-horizontal-alignment: right;
-    }
+      ::cadastre {
+        text-name: "cadastre: "+[cadastre];
+        text-face-name:@font;
+        text-allow-overlap:true;
+        text-fill: @cadastreColor;
+        text-dx: 4;
+        text-dy: -0.1;
+        text-halo-radius: 3;
+        text-size: 12;
+        text-horizontal-alignment: right;
+      }
 
-    ::osm {
-    text-name: "osm: "+[osm];
-    text-face-name:@font;
-    text-allow-overlap:true;
-    text-fill: @osmColor;
-    text-halo-radius: 3;
-    text-dx: -4;
-    text-dy: -0.1;
-    text-size: 12;
-    text-horizontal-alignment: left;
-    }
+      ::osm {
+        text-name: "osm: "+[osm];
+        text-face-name:@font;
+        text-allow-overlap:true;
+        text-fill: @osmColor;
+        text-halo-radius: 3;
+        text-dx: -4;
+        text-dy: -0.1;
+        text-size: 12;
+        text-horizontal-alignment: left;
+      }
     }
   }
 }
@@ -280,7 +280,7 @@ Map { buffer-size: 256; }
     text-face-name: @font;
     [nom_voie=''], [numero > 5000], [numero=0] {text-face-name: "DejaVu Sans Mono Oblique";}
     text-fill: grey;
-	text-size: 10;
+	  text-size: 10;
     text-dy: -4;
     text-dx: 4;
     text-placement-type: simple;
@@ -298,11 +298,11 @@ Map { buffer-size: 256; }
   marker-ignore-placement:true;
   [fantoir=''] {marker-width:6;}
   [zoom>=17] {
-	text-name: [num];
+	  text-name: [num];
     text-face-name: @font;
     [typeadressage='fictif'] {text-face-name: "DejaVu Sans Mono Oblique";}
     text-fill: purple;
-	text-size: 10;
+	  text-size: 10;
     text-dy: -4;
     text-dx: 4;
     text-placement-type: simple;
@@ -353,5 +353,4 @@ Map { buffer-size: 256; }
     text-halo-radius: 1;
     text-halo-fill: fadeout(white,50%);
   }
-
 }
