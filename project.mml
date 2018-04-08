@@ -160,7 +160,7 @@
       ],
       "Datasource": {
         "type": "postgis",
-        "table": "(select b.nom_voie, coalesce(b.code_insee||b.fant_voie||f.cle_rivoli,'') as fant_voie, b.code_insee, st_convexhull(st_collect(b.wkb_geometry)) as wkb_geometry, count(*) as nb from communes c join ban b on (b.wkb_geometry && c.wkb_geometry and b.code_insee=c.insee) left join cumul_voies v on (v.insee_com=b.code_insee and v.fantoir LIKE b.code_insee||b.fant_voie||'%') left join fantoir_voie f on (f.code_insee=b.code_insee and f.id_voie=b.fant_voie) where b.numero!='0' and b.numero::numeric<5000 and b.nom_voie!='' and v.fantoir is null and c.wkb_geometry && st_setsrid(!bbox!,4326) group by 1,2,3) as manque_ban\n",
+        "table": "(select b.nom_voie, coalesce(b.code_insee||b.fant_voie||f.cle_rivoli,'') as fant_voie, b.code_insee, st_convexhull(st_collect(b.wkb_geometry)) as wkb_geometry, count(*) as nb from communes c join ban b on (b.wkb_geometry && c.wkb_geometry and b.code_insee=c.insee) left join cumul_voies v on (v.insee_com=b.code_insee and (v.fantoir LIKE b.code_insee||b.fant_voie||'%' OR v.voie_osm <-> b.nom_voie = 1)) left join fantoir_voie f on (f.code_insee=b.code_insee and f.id_voie=b.fant_voie) where b.numero!='0' and b.numero::numeric<5000 and b.nom_voie!='' and v.fantoir is null and c.wkb_geometry && st_setsrid(!bbox!,4326) group by 1,2,3) as manque_ban\n",
         "key_field": "",
         "geometry_field": "",
         "extent_cache": "custom",
