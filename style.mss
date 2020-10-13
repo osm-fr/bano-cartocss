@@ -177,7 +177,7 @@ Map { buffer-size: 256; }
   line-smooth: 0.5;
   line-offset: 10;
   line-opacity: 0.25;
-  text-name: [voie_cadastre]+[voie_osm];
+  text-name: [voie_ban]+[voie_osm];
   text-face-name: @font;
   text-allow-overlap: false;
   text-placement: line;
@@ -186,7 +186,7 @@ Map { buffer-size: 256; }
   text-size: 12;
   text-dy: 20;
 
-  b/text-name: [voie_cadastre];
+  b/text-name: [voie_ban];
   b/text-face-name: @font;
   b/text-allow-overlap: true;
   b/text-fill: red;
@@ -280,28 +280,6 @@ Map { buffer-size: 256; }
     text-face-name: @font;
     [nom_voie=''], [numero > 5000], [numero=0] {text-face-name: "DejaVu Sans Mono Oblique";}
     text-fill: grey;
-	  text-size: 10;
-    text-dy: -4;
-    text-dx: 4;
-    text-placement-type: simple;
-    text-placements: "E,W,N,S,E,NW,NE,SE,SW";
-    text-halo-radius: 1;
-    [zoom>=19] { text-size: 12; }
-  }
-}
-
-#dgfip [zoom>=14]{ /* couche des données DGFiP */
-  marker-width:4;
-  marker-fill: purple;
-  marker-line-width: 0;
-  marker-allow-overlap:true;
-  marker-ignore-placement:true;
-  [fantoir=''] {marker-width:6;}
-  [zoom>=17] {
-	  text-name: [num];
-    text-face-name: @font;
-    [typeadressage='fictif'] {text-face-name: "DejaVu Sans Mono Oblique";}
-    text-fill: purple;
 	  text-size: 10;
     text-dy: -4;
     text-dx: 4;

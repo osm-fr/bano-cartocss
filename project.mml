@@ -29,7 +29,7 @@
       ],
       "Datasource": {
         "type": "postgis",
-        "table": "(SELECT b.geometrie,b.nom_voie,b.numero::numeric as numero,trim(b.numero||' '||coalesce(b.rep,'')) as num,coalesce(v.fantoir,'') as fantoir FROM ban_odbl b LEFT JOIN cumul_voies v ON (v.insee_com=b.code_insee AND v.fantoir LIKE b.code_insee||SUBSTRING(UPPER(b.id_fantoir)||'xxxxxxxxxx',7,4)||'%') as ban",
+        "table": "(SELECT b.geometrie,b.nom_voie,b.numero::numeric as numero,trim(b.numero||' '||coalesce(b.rep,'')) as num,coalesce(v.fantoir,'') as fantoir FROM ban_odbl b LEFT JOIN cumul_voies v ON (v.insee_com=b.code_insee AND v.fantoir LIKE b.code_insee||SUBSTRING(UPPER(b.id_fantoir)||'xxxxxxxxxx',7,4)||'%')) as ban",
         "key_field": "",
         "geometry_field": "geometrie",
         "extent_cache": "custom",
@@ -64,13 +64,12 @@
         "extent": "-180,-90,180,90",
         "dbname": "cadastre",
         "host": "localhost",
-        "user": "cadastre"      },
+        "user": "cadastre",
         "id": "addr",
         "project": "BANO",
         "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs",
         "srid": "4326",
-        "asynchronous_request": "true"
-      },
+        "asynchronous_request": "true"},
       "id": "addr",
       "class": "",
       "srs-name": "WGS84",
@@ -126,7 +125,7 @@
       ],
       "Datasource": {
         "type": "postgis",
-        "table": "(select b.nom_voie, coalesce(b.code_insee||SUBSTRING(UPPER(b.id_fantoir)||'xxxxxxxxxx',7,4)||f.cle_rivoli,'') as fant_voie, b.code_insee, st_convexhull(st_collect(b.geometrie)) as wkb_geometry, count(*) as nb from infos_communes c join ban_odbl b on (b.geometrie && c.geometrie and b.code_insee=c.insee_com) left join cumul_voies v on (v.insee_com=b.code_insee and (v.fantoir LIKE b.code_insee||SUBSTRING(UPPER(b.id_fantoir)||'xxxxxxxxxx',7,4)||'%' OR v.voie_osm::text <-> b.nom_voie = 1)) left join fantoir_voie f on (f.code_insee = b.code_insee AND f.fantoir = b.code_insee||SUBSTRING(UPPER(b.id_fantoir)||'xxxxxxxxxx',7,4)) where b.numero!='0' and b.nom_voie!='' and v.fantoir is null  and c.geometrie && st_setsrid(!bbox!,4326) group by 1,2,3) as manque_ban",
+        "table": "(select b.nom_voie, coalesce(b.code_insee||SUBSTRING(UPPER(b.id_fantoir)||'xxxxxxxxxx',7,4)||f.cle_rivoli,'') as fant_voie, b.code_insee, st_convexhull(st_collect(b.geometrie)) as wkb_geometry, count(*) as nb from polygones_insee_geo c join ban_odbl b on (b.geometrie && c.geometrie and b.code_insee=c.insee_com) left join cumul_voies v on (v.insee_com=b.code_insee and (v.fantoir LIKE b.code_insee||SUBSTRING(UPPER(b.id_fantoir)||'xxxxxxxxxx',7,4)||'%' OR v.voie_osm::text <-> b.nom_voie = 1)) left join fantoir_voie f on (f.code_insee = b.code_insee AND f.fantoir = b.code_insee||SUBSTRING(UPPER(b.id_fantoir)||'xxxxxxxxxx',7,4)) where b.numero!='0' and b.nom_voie!='' and v.fantoir is null  and c.geometrie && st_setsrid(!bbox!,4326) group by 1,2,3) as manque_ban",
         "key_field": "",
         "geometry_field": "wkb_geometry",
         "extent_cache": "custom",
@@ -151,7 +150,7 @@
       ],
       "Datasource": {
         "type": "postgis",
-        "table": "(SELECT cu.fantoir, cu.voie_autre, coalesce(cu.voie_osm,'') as voie_osm, st_convexhull(st_collect(cu.geometrie)) as poly, count(*) as nb,cu.source, l.label_statut FROM polygones_insee_geo co JOIN cumul_adresses cu on (cu.insee_com=co.insee_com and ((coalesce(cu.voie_osm,'')='' and cu.source='BAN') or (cu.fantoir='' and cu.source='OSM'))) JOIN fantoir_voie f on (f.fantoir10=cu.fantoir and f.date_annul='0000000') LEFT JOIN statut_fantoir s on (s.fantoir=cu.fantoir) LEFT JOIN labels_statuts_fantoir l on (l.id_statut=s.id_statut) WHERE co.geometrie && st_setsrid(!bbox!,4326) GROUP BY cu.fantoir, cu.voie_autre, cu.voie_osm, cu.source, l.label_statut ) as manque",
+        "table": "(SELECT cu.fantoir, cu.voie_autre as voie_ban, coalesce(cu.voie_osm,'') as voie_osm, st_convexhull(st_collect(cu.geometrie)) as poly, count(*) as nb,cu.source, l.label_statut FROM polygones_insee_geo co JOIN cumul_adresses cu on (cu.insee_com=co.insee_com and ((coalesce(cu.voie_osm,'')='' and cu.source='BAN') or (cu.fantoir='' and cu.source='OSM'))) JOIN fantoir_voie f on (f.fantoir10=cu.fantoir and f.date_annul='0000000') LEFT JOIN statut_fantoir s on (s.fantoir=cu.fantoir) LEFT JOIN labels_statuts_fantoir l on (l.id_statut=s.id_statut) WHERE co.geometrie && st_setsrid(!bbox!,4326) GROUP BY cu.fantoir, cu.voie_autre, cu.voie_osm, cu.source, l.label_statut ) as manque",
         "key_field": "",
         "geometry_field": "poly",
         "extent_cache": "custom",
