@@ -1,0 +1,228 @@
+bounds: &world
+  - -180
+  - -85.05112877980659
+  - 180
+  - 85.05112877980659
+center:
+  - 3.4018
+  - 47.8511
+  - 18
+format: png8
+interactivity: false
+minzoom: 6
+maxzoom: 20
+
+scale: 1
+metatile: 8
+name: bano-cartocss
+description: ''
+attribution: ''
+
+# Various parts to be included later on
+_parts:
+  extents: &extents
+    extent: *world
+    srs-name: "3857"
+    srs: "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"
+  extents84: &extents84
+    extent: *world
+    srs-name: "WGS84"
+    srs: "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
+  banodb: &banodb
+    type: "postgis"
+    dbname: "cadastre"
+    host: "localhost"
+    user: "cadastre"
+    password: "m4d31nfr4nc3"
+    extent: "-180,-85,180,85"
+    srid: 4326
+    asynchronous_request: 'true'
+    max_async_connection: '4'
+
+
+Stylesheet:
+  - style.mss
+
+Layer:
+  # points d'adresses BAN
+  - id: ban
+    name: ban
+    <<: *extents84
+    Datasource:
+      <<: *banodb
+      table: >-
+        (
+          SELECT b.geometrie,
+            b.nom_voie,
+            b.numero::numeric as numero,
+            trim(b.numero||' '||coalesce(b.rep,'')) as num,
+            coalesce(v.fantoir,'') as fantoir
+          FROM ban_odbl b
+          LEFT JOIN cumul_voies v ON (v.insee_com=b.code_insee
+            AND v.fantoir LIKE
+            b.code_insee||SUBSTRING(UPPER(b.id_fantoir)||'xxxxxxxxxx',7,4)||'%')
+        ) as ban
+      geometry_field: geometrie
+
+  - id: addr
+    name: addr
+    <<: *extents84
+    Datasource:
+      <<: *banodb
+      table: >-
+        (
+          SELECT
+            geometrie,
+            SUBSTR(source,2,1) AS source,
+            numero,
+            SUBSTRING(COALESCE(voie_osm,''),1,1) AS voie_o,
+            SUBSTRING(fantoir,1,1) as fant
+          FROM cumul_adresses
+          ORDER BY voie_o desc, source
+        ) as addr
+      geometry_field: geometrie
+
+  - id: addr_lz
+    name: addr_lz
+    status: off
+    <<: *extents84
+    Datasource:
+      <<: *banodb
+      table: >-
+        (
+          SELECT
+            co.geometrie,
+            co.insee_com AS insee,
+            nom_com,
+            format_cadastre,
+            sum(case when source='OSM' then 1 else 0 end) as osm,
+            sum(case when source='BAN' then 1 else 0 end) as cadastre,
+            100*(sum(case when source='OSM' then 1 else 0 end)+1)/(sum(case when source='BAN' then 1
+                      else 0 end)+1) as pourcent
+          FROM infos_communes co
+          LEFT JOIN code_cadastre ca on (ca.insee_com = co.insee_com)
+          LEFT JOIN cumul_adresses cu on (cu.insee_com=co.insee_com)
+          GROUP BY co.insee_com, ca.nom_com, co.geometrie, format_cadastre
+        ) as addr_lz
+      geometry_field: geometrie
+
+  - id: manque_ban
+    name: manque_ban
+    status: off
+    <<: *extents84
+    Datasource:
+      <<: *banodb
+      table: >-
+        (SELECT
+          st_convexhull(st_collect(b.geometrie)) as geom,
+          b.nom_voie,
+          coalesce(b.code_insee||SUBSTRING(UPPER(b.id_fantoir)||'xxxxxxxxxx',7,4)||f.cle_rivoli,'') as fant_voie,
+          b.code_insee,
+          count(*) as nb
+        FROM polygones_insee_geo c
+        JOIN ban_odbl b on (b.geometrie && c.geometrie and b.code_insee=c.insee_com)
+        LEFT JOIN cumul_voies v on (
+          v.insee_com=b.code_insee and
+          (v.fantoir LIKE b.code_insee||SUBSTRING(UPPER(b.id_fantoir)||'xxxxxxxxxx',7,4)||'%'
+            OR
+           v.voie_osm::text <-> b.nom_voie = 1))
+        LEFT JOIN fantoir_voie f on (f.code_insee = b.code_insee
+          AND f.fantoir = b.code_insee||SUBSTRING(UPPER(b.id_fantoir)||'xxxxxxxxxx',7,4))
+        WHERE
+          b.numero!='0'
+          AND b.nom_voie!=''
+          AND v.fantoir is null
+          AND c.geometrie && !bbox!
+        GROUP BY 2,3,4
+        ) as manque_ban
+      geometry_field: geom
+
+  - id: manque
+    <<: *extents84
+    Datasource:
+      <<: *banodb
+      table: >-
+        (
+          SELECT st_convexhull(st_collect(cu.geometrie)) as geometrie,
+            cu.fantoir,
+            cu.voie_autre as voie_ban,
+            coalesce(cu.voie_osm,'') as voie_osm,
+            count(*) as nb,
+            cu.source,
+            l.label_statut
+          FROM polygones_insee_geo co
+          JOIN cumul_adresses cu on (cu.insee_com=co.insee_com
+              and ((coalesce(cu.voie_osm,'')=''
+              and cu.source='BAN')
+            or (cu.fantoir=''
+              and cu.source='OSM')))
+          JOIN fantoir_voie f on (f.fantoir10=cu.fantoir and f.date_annul='0000000')
+          LEFT JOIN statut_fantoir s on (s.fantoir=cu.fantoir)
+          LEFT JOIN labels_statuts_fantoir l on (l.id_statut=s.id_statut)
+          WHERE co.geometrie && !bbox!
+          GROUP BY cu.fantoir, cu.voie_autre, cu.voie_osm, cu.source, l.label_statut
+        ) as manque
+      geometry_field: geometrie
+    
+
+  - id: voies
+    name: voies
+    <<: *extents84
+    Datasource:
+      <<: *banodb
+      table: >-
+        (
+          SELECT v.*
+          FROM cumul_voies v
+          LEFT JOIN cumul_adresses a on (a.fantoir=v.fantoir) where a.fantoir is null
+        ) as voies
+      geometry_field: geometrie
+
+  - id: fantoir
+    name: fantoir
+    <<: *extents84
+    Datasource:
+      <<: *banodb
+      table: >-
+        (
+          SELECT geometrie,
+            name as nom,
+            insee_com as insee,
+            count(*) as nb,
+            format_cadastre,
+            min(fantoir) as min_fantoir
+          FROM (
+            SELECT co.geometrie,
+              name,
+              co.insee_com,
+              format_cadastre,
+              fantoir
+            FROM infos_communes co
+            LEFT JOIN cumul_adresses cu on (cu.insee_com=co.insee_com and source='BAN' and (coalesce(voie_osm,'')=''))
+            LEFT JOIN code_cadastre ca on (ca.insee_com=co.insee_com)
+            WHERE co.geometrie && !bbox!
+            GROUP BY co.geometrie, name, co.insee_com, format_cadastre, fantoir
+          ) as fantoir
+          GROUP BY geometrie, nom, insee, format_cadastre
+        ) as f
+      geometry_field: geometrie
+    
+
+  - id: lieuxdits
+    name: lieuxdits
+    <<: *extents84
+    Datasource:
+      <<: *banodb
+      table: >-
+        (
+          SELECT geometrie,
+            libelle_cadastre,
+            coalesce(libelle_osm,'') as libelle_osm,
+            fantoir,
+            ld_bati,
+            source
+          FROM cumul_places
+          ORDER BY source
+        ) as place
+      geometry_field: geometrie
+    
