@@ -31,7 +31,7 @@ _parts:
   banodb: &banodb
     type: "postgis"
     dbname: "cadastre"
-    host: "localhost"
+    host: "banodb"
     user: "cadastre"
     password: "m4d31nfr4nc3"
     extent: "-180,-85,180,85"
