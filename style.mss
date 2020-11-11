@@ -1,7 +1,3 @@
-/*
-autopilot 0.0.1
-[{"id":"Map","background-color":"#b8dee6"}]
-*/
 Map { buffer-size: 256; }
 
 @font: "DejaVu Sans Condensed";
