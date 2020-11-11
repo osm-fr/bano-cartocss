@@ -32,7 +32,7 @@ _parts:
     type: "postgis"
     dbname: "cadastre"
     host: "banodb"
-    user: "cadastre"
+    user: "renderd"
     password: "m4d31nfr4nc3"
     extent: "-180,-85,180,85"
     srid: 4326

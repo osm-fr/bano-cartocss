@@ -168,7 +168,7 @@
       <Parameter name="type"><![CDATA[postgis]]></Parameter>
       <Parameter name="dbname"><![CDATA[cadastre]]></Parameter>
       <Parameter name="host"><![CDATA[banodb]]></Parameter>
-      <Parameter name="user"><![CDATA[cadastre]]></Parameter>
+      <Parameter name="user"><![CDATA[renderd]]></Parameter>
       <Parameter name="password"><![CDATA[m4d31nfr4nc3]]></Parameter>
       <Parameter name="extent"><![CDATA[-180,-85,180,85]]></Parameter>
       <Parameter name="srid">4326</Parameter>
@@ -441,7 +441,7 @@
       <Parameter name="type"><![CDATA[postgis]]></Parameter>
       <Parameter name="dbname"><![CDATA[cadastre]]></Parameter>
       <Parameter name="host"><![CDATA[banodb]]></Parameter>
-      <Parameter name="user"><![CDATA[cadastre]]></Parameter>
+      <Parameter name="user"><![CDATA[renderd]]></Parameter>
       <Parameter name="password"><![CDATA[m4d31nfr4nc3]]></Parameter>
       <Parameter name="extent"><![CDATA[-180,-85,180,85]]></Parameter>
       <Parameter name="srid">4326</Parameter>
@@ -543,7 +543,7 @@
       <Parameter name="type"><![CDATA[postgis]]></Parameter>
       <Parameter name="dbname"><![CDATA[cadastre]]></Parameter>
       <Parameter name="host"><![CDATA[banodb]]></Parameter>
-      <Parameter name="user"><![CDATA[cadastre]]></Parameter>
+      <Parameter name="user"><![CDATA[renderd]]></Parameter>
       <Parameter name="password"><![CDATA[m4d31nfr4nc3]]></Parameter>
       <Parameter name="extent"><![CDATA[-180,-85,180,85]]></Parameter>
       <Parameter name="srid">4326</Parameter>
@@ -607,7 +607,7 @@
       <Parameter name="type"><![CDATA[postgis]]></Parameter>
       <Parameter name="dbname"><![CDATA[cadastre]]></Parameter>
       <Parameter name="host"><![CDATA[banodb]]></Parameter>
-      <Parameter name="user"><![CDATA[cadastre]]></Parameter>
+      <Parameter name="user"><![CDATA[renderd]]></Parameter>
       <Parameter name="password"><![CDATA[m4d31nfr4nc3]]></Parameter>
       <Parameter name="extent"><![CDATA[-180,-85,180,85]]></Parameter>
       <Parameter name="srid">4326</Parameter>
@@ -744,7 +744,7 @@ GROUP BY 2,3,4 ) as manque_ban]]></Parameter>
       <Parameter name="type"><![CDATA[postgis]]></Parameter>
       <Parameter name="dbname"><![CDATA[cadastre]]></Parameter>
       <Parameter name="host"><![CDATA[banodb]]></Parameter>
-      <Parameter name="user"><![CDATA[cadastre]]></Parameter>
+      <Parameter name="user"><![CDATA[renderd]]></Parameter>
       <Parameter name="password"><![CDATA[m4d31nfr4nc3]]></Parameter>
       <Parameter name="extent"><![CDATA[-180,-85,180,85]]></Parameter>
       <Parameter name="srid">4326</Parameter>
@@ -797,7 +797,7 @@ GROUP BY 2,3,4 ) as manque_ban]]></Parameter>
       <Parameter name="type"><![CDATA[postgis]]></Parameter>
       <Parameter name="dbname"><![CDATA[cadastre]]></Parameter>
       <Parameter name="host"><![CDATA[banodb]]></Parameter>
-      <Parameter name="user"><![CDATA[cadastre]]></Parameter>
+      <Parameter name="user"><![CDATA[renderd]]></Parameter>
       <Parameter name="password"><![CDATA[m4d31nfr4nc3]]></Parameter>
       <Parameter name="extent"><![CDATA[-180,-85,180,85]]></Parameter>
       <Parameter name="srid">4326</Parameter>
@@ -935,7 +935,7 @@ GROUP BY 2,3,4 ) as manque_ban]]></Parameter>
       <Parameter name="type"><![CDATA[postgis]]></Parameter>
       <Parameter name="dbname"><![CDATA[cadastre]]></Parameter>
       <Parameter name="host"><![CDATA[banodb]]></Parameter>
-      <Parameter name="user"><![CDATA[cadastre]]></Parameter>
+      <Parameter name="user"><![CDATA[renderd]]></Parameter>
       <Parameter name="password"><![CDATA[m4d31nfr4nc3]]></Parameter>
       <Parameter name="extent"><![CDATA[-180,-85,180,85]]></Parameter>
       <Parameter name="srid">4326</Parameter>
@@ -1122,7 +1122,7 @@ GROUP BY 2,3,4 ) as manque_ban]]></Parameter>
       <Parameter name="type"><![CDATA[postgis]]></Parameter>
       <Parameter name="dbname"><![CDATA[cadastre]]></Parameter>
       <Parameter name="host"><![CDATA[banodb]]></Parameter>
-      <Parameter name="user"><![CDATA[cadastre]]></Parameter>
+      <Parameter name="user"><![CDATA[renderd]]></Parameter>
       <Parameter name="password"><![CDATA[m4d31nfr4nc3]]></Parameter>
       <Parameter name="extent"><![CDATA[-180,-85,180,85]]></Parameter>
       <Parameter name="srid">4326</Parameter>
