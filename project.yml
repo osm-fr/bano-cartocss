@@ -161,7 +161,8 @@ Layer:
           JOIN fantoir_voie f on (f.fantoir10=cu.fantoir and f.date_annul='0000000')
           LEFT JOIN statut_fantoir s on (s.fantoir=cu.fantoir)
           LEFT JOIN labels_statuts_fantoir l on (l.id_statut=s.id_statut)
-          WHERE co.geometrie && !bbox!
+          LEFT JOIN cumul_places cp ON (cp.fantoir = cu.fantoir AND cp.source='OSM')
+          WHERE co.geometrie && !bbox! AND cp.fantoir IS NULL
           GROUP BY cu.fantoir, cu.voie_autre, cu.voie_osm, cu.source, l.label_statut
         ) as manque
       geometry_field: geometrie
