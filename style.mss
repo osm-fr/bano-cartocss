@@ -2,8 +2,8 @@ Map { buffer-size: 256; }
 
 @font: "DejaVu Sans Condensed";
 @oblique: "DejaVu Sans Condensed Oblique";
-@osmColor: #0a0;
-@opendataColor: #Fb0;
+@osmColor: #0a0; /* vert */
+@opendataColor: #Fb0; /* orange */
 @cadastreColor: blue;
 
 #addr {
@@ -13,31 +13,31 @@ Map { buffer-size: 256; }
   marker-allow-overlap: true;
 
   /* couleur du point */
-  [source='S'] /* OSM */ {
+  [source='OSM'] /* OSM */ {
   	marker-fill: @osmColor;
     [fant=''] { marker-fill: purple; } /* pas de rapprochement FANTOIR */
   }
-  [source='D'] /* opendata */ { marker-fill: @opendataColor; }
-  [source='A'] /* CADASTRE */ {
+  [source='BAL'] /* opendata */ { marker-fill: @opendataColor; }
+  [source='BAN'] /* CADASTRE */ {
     marker-fill: @cadastreColor;
     [voie_o=''] { marker-fill: red; } /* pas de rapprochement OSM */
   }
 
   /* taille en fonction du zoom */
-	[zoom>=12] {marker-width: 1; [source='A'][voie_o='']{marker-width: 1.5;}}
-	[zoom>=13] {marker-width: 2; [source='A'][voie_o='']{marker-width: 3;}}
-	[zoom>=14] {marker-width: 3; [source='A'][voie_o='']{marker-width: 4;}}
-	[zoom>=15] { opacity: 1; marker-width: 5; [source='A'][voie_o='']{marker-width: 7;}}
+	[zoom>=12] {marker-width: 1; [source='BAN'][voie_o='']{marker-width: 1.5;}}
+	[zoom>=13] {marker-width: 2; [source='BAN'][voie_o='']{marker-width: 3;}}
+	[zoom>=14] {marker-width: 3; [source='BAN'][voie_o='']{marker-width: 4;}}
+	[zoom>=15] { opacity: 1; marker-width: 5; [source='CAD'][voie_o='']{marker-width: 7;}}
   [zoom>=18] {
     marker-width: 4;
     /* rendu du numéro aux plus forts zooms */
     /* couleur du numéro */
-    [source='S'] /* OSM */ {
+    [source='OSM'] /* OSM */ {
     	text-fill: @osmColor;
       [fant=''] { text-fill: purple; } /* pas de rapprochement FANTOIR */
     }
-    [source='D'] /* opendata */ { text-fill: @opendataColor; }
-    [source='A'] /* CADASTRE */{
+    [source='BAL'] /* opendata */ { text-fill: @opendataColor; }
+    [source='BAN'] /* CADASTRE */{
    	  text-fill: @cadastreColor;
       [voie_o=''] { text-fill: red; } /* pas de rapprochement OSM */
     }

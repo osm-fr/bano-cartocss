@@ -47,6 +47,7 @@ Layer:
   # points d'adresses BAN
   - id: ban
     name: ban
+    status: off
     <<: *extents84
     Datasource:
       <<: *banodb
@@ -73,11 +74,12 @@ Layer:
         (
           SELECT
             geometrie,
-            SUBSTR(source,2,1) AS source,
+            left(source,3) as source,
             numero,
             SUBSTRING(COALESCE(voie_osm,''),1,1) AS voie_o,
             SUBSTRING(fantoir,1,1) as fant
           FROM cumul_adresses
+          WHERE source != 'CADASTRE'
           ORDER BY voie_o desc, source
         ) as addr
       geometry_field: geometrie
