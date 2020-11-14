@@ -3,8 +3,12 @@ Map { buffer-size: 256; }
 @font: "DejaVu Sans Condensed";
 @oblique: "DejaVu Sans Condensed Oblique";
 @osmColor: #0a0; /* vert */
+@osmSansFantoirColor: purple;
 @opendataColor: #Fb0; /* orange */
 @cadastreColor: blue;
+@banColor: blue;
+@banNonRapprocheColor: red;
+@banNonRapprocheSansFantoirColor: brown;
 
 #addr {
   opacity: 0.5;
@@ -15,12 +19,14 @@ Map { buffer-size: 256; }
   /* couleur du point */
   [source='OSM'] /* OSM */ {
   	marker-fill: @osmColor;
-    [fant=''] { marker-fill: purple; } /* pas de rapprochement FANTOIR */
+    [fant=''] { marker-fill: @osmSansFantoirColor; } /* pas de rapprochement FANTOIR */
   }
   [source='BAL'] /* opendata */ { marker-fill: @opendataColor; }
-  [source='BAN'] /* CADASTRE */ {
-    marker-fill: @cadastreColor;
-    [voie_o=''] { marker-fill: red; } /* pas de rapprochement OSM */
+  [source='BAN'] /* BAN */ {
+    marker-fill: @banColor;
+    [voie_o=''] { marker-fill: @banNonRapprocheColor; /* pas de rapprochement OSM */
+      [fant=''] { marker-fill: @banNonRapprocheSansFantoirColor; } /* pas de rapprochement OSM et FANTOIR */
+    } 
   }
 
   /* taille en fonction du zoom */
@@ -34,12 +40,14 @@ Map { buffer-size: 256; }
     /* couleur du numéro */
     [source='OSM'] /* OSM */ {
     	text-fill: @osmColor;
-      [fant=''] { text-fill: purple; } /* pas de rapprochement FANTOIR */
+      [fant=''] { text-fill: @osmSansFantoirColor; } /* pas de rapprochement FANTOIR */
     }
     [source='BAL'] /* opendata */ { text-fill: @opendataColor; }
-    [source='BAN'] /* CADASTRE */{
-   	  text-fill: @cadastreColor;
-      [voie_o=''] { text-fill: red; } /* pas de rapprochement OSM */
+    [source='BAN'] /* BAN */{
+      text-fill: @banColor;
+      [voie_o=''] { text-fill: @banNonRapprocheColor; /* pas de rapprochement OSM */
+        [fant=''] { text-fill: @banNonRapprocheSansFantoirColor; } /* pas de rapprochement OSM et FANTOIR */
+    }
     }
 	  text-name: [numero];
     text-face-name: @font;
@@ -61,7 +69,7 @@ Map { buffer-size: 256; }
     text-halo-radius: 2;
     text-allow-overlap:true;
     [min_fantoir = null][nb=1] { text-name: ''; }
-    [nb>0] { text-fill: red; }
+    [nb>0] { text-fill: @banNonRapprocheColor; }
   }
   [zoom>=13]
   {
@@ -95,7 +103,7 @@ Map { buffer-size: 256; }
 	    text-halo-radius: 3;
 	    text-size: 14;
 	  	text-dy: 10;
-      text-fill: red;
+      text-fill: @banNonRapprocheColor;
 	    [min_fantoir = null][nb=1] { text-name: "";}
     }
   }
@@ -165,7 +173,7 @@ Map { buffer-size: 256; }
   polygon-clip: false;
   polygon-opacity: 0;
   polygon-smooth: 0.5;
-  line-color: red;
+  line-color: @banNonRapprocheColor;
   line-width: 10;
   line-clip: false;
   line-join: round;
@@ -178,14 +186,14 @@ Map { buffer-size: 256; }
   text-allow-overlap: false;
   text-placement: line;
   text-spacing: 100;
-  text-fill: red;
+  text-fill: @banNonRapprocheColor;
   text-size: 12;
   text-dy: 20;
 
   b/text-name: [voie_ban];
   b/text-face-name: @font;
   b/text-allow-overlap: true;
-  b/text-fill: red;
+  b/text-fill: @banNonRapprocheColor;
   b/text-size: 14;
   b/text-halo-radius: 3;
   b/text-halo-fill: fadeout(white,50%);
@@ -199,11 +207,19 @@ Map { buffer-size: 256; }
   }
 
   [source='OSM'] /* OSM */ {
-    text-fill: purple;
-    line-color: purple;
-    b/text-fill: purple;
+    text-fill: @osmSansFantoirColor;
+    line-color: @osmSansFantoirColor;
+    b/text-fill: @osmSansFantoirColor;
     b/text-dy: 0;
     b/text-name: [voie_osm]+" ("+[nb]+")";
+  }
+  
+    [source='BAN'][fantoir=''] /* BAN sans fantoir */ {
+    text-fill: @banNonRapprocheSansFantoirColor;
+    line-color: @banNonRapprocheSansFantoirColor;
+    b/text-fill: @banNonRapprocheSansFantoirColor;
+    b/text-dy: 0;
+    b/text-name: [voie_ban]+" ("+[nb]+")";
   }
 
   /* libellé rue et erreur signalée affichés en gris */
@@ -236,11 +252,11 @@ Map { buffer-size: 256; }
   text-halo-radius: 1;
   [source='OSM'] /* OSM */ {
     text-fill: @osmColor;
-    [fantoir=''] { text-fill: purple; } /* pas de rapprochement FANTOIR */
+    [fantoir=''] { text-fill: @osmSansFantoirColor; } /* pas de rapprochement FANTOIR */
     }
     [source='CADASTRE'] /* CADASTRE */{
    	  text-fill: @cadastreColor;
-      [libelle_osm=''] { text-fill: red; } /* pas de rapprochement OSM */
+      [libelle_osm=''] { text-fill: @banNonRapprocheColor; } /* pas de rapprochement OSM */
     }
 }
 
