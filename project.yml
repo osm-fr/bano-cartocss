@@ -80,6 +80,7 @@ Layer:
             SUBSTRING(fantoir,1,1) as fant
           FROM cumul_adresses
           WHERE source != 'CADASTRE'
+          AND substring(fantoir,6,1)<='9'
           ORDER BY voie_o desc, source
         ) as addr
       geometry_field: geometrie
@@ -161,8 +162,8 @@ Layer:
           JOIN fantoir_voie f on (f.fantoir10=cu.fantoir and f.date_annul='0000000')
           LEFT JOIN statut_fantoir s on (s.fantoir=cu.fantoir)
           LEFT JOIN labels_statuts_fantoir l on (l.id_statut=s.id_statut)
-          LEFT JOIN cumul_places cp ON (cp.fantoir = cu.fantoir AND cp.source='OSM')
-          WHERE co.geometrie && !bbox! AND cp.fantoir IS NULL
+          WHERE co.geometrie && !bbox!
+            AND substring(cu.fantoir,6,1) <= '9'
           GROUP BY cu.fantoir, cu.voie_autre, cu.voie_osm, cu.source, l.label_statut
         ) as manque
       geometry_field: geometrie
@@ -204,6 +205,7 @@ Layer:
             LEFT JOIN cumul_adresses cu on (cu.insee_com=co.insee_com and source='BAN' and (coalesce(voie_osm,'')=''))
             LEFT JOIN code_cadastre ca on (ca.insee_com=co.insee_com)
             WHERE co.geometrie && !bbox!
+              AND substring(cu.fantoir,6,1) <= '9'
             GROUP BY co.geometrie, name, co.insee_com, format_cadastre, fantoir
           ) as fantoir
           GROUP BY geometrie, nom, insee, format_cadastre
