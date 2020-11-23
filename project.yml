@@ -80,7 +80,7 @@ Layer:
             SUBSTRING(fantoir,1,1) as fant
           FROM cumul_adresses
           WHERE source != 'CADASTRE'
-          AND substring(fantoir,6,1)<='9'
+          AND (substring(fantoir,6,1)<='9' OR voie_osm != '')
           ORDER BY voie_o desc, source
         ) as addr
       geometry_field: geometrie

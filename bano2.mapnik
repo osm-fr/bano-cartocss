@@ -52,44 +52,6 @@
     </Rule>
     <Rule>
       <MaxScaleDenominator>1500</MaxScaleDenominator>
-      <Filter><![CDATA[([numero] = 0) and ([fantoir] = '')]]></Filter>
-      <MarkersSymbolizer allow-overlap="true" fill="#808080" ignore-placement="true" stroke-width="0" width="6" />
-      <TextSymbolizer dx="4" dy="-4" face-name="DejaVu Sans Mono Oblique" fill="#808080" halo-radius="1" placement-type="simple" placements="E,W,N,S,E,NW,NE,SE,SW" size="12"><![CDATA[[num]]]></TextSymbolizer>
-    </Rule>
-    <Rule>
-      <MaxScaleDenominator>5000</MaxScaleDenominator>
-      <MinScaleDenominator>1500</MinScaleDenominator>
-      <Filter><![CDATA[([numero] = 0) and ([fantoir] = '')]]></Filter>
-      <MarkersSymbolizer allow-overlap="true" fill="#808080" ignore-placement="true" stroke-width="0" width="6" />
-      <TextSymbolizer dx="4" dy="-4" face-name="DejaVu Sans Mono Oblique" fill="#808080" halo-radius="1" placement-type="simple" placements="E,W,N,S,E,NW,NE,SE,SW" size="10"><![CDATA[[num]]]></TextSymbolizer>
-    </Rule>
-    <Rule>
-      <MaxScaleDenominator>50000</MaxScaleDenominator>
-      <MinScaleDenominator>5000</MinScaleDenominator>
-      <Filter><![CDATA[([numero] = 0) and ([fantoir] = '')]]></Filter>
-      <MarkersSymbolizer allow-overlap="true" fill="#808080" ignore-placement="true" stroke-width="0" width="6" />
-    </Rule>
-    <Rule>
-      <MaxScaleDenominator>1500</MaxScaleDenominator>
-      <Filter><![CDATA[([numero] = 0)]]></Filter>
-      <MarkersSymbolizer allow-overlap="true" fill="#808080" ignore-placement="true" stroke-width="0" width="4" />
-      <TextSymbolizer dx="4" dy="-4" face-name="DejaVu Sans Mono Oblique" fill="#808080" halo-radius="1" placement-type="simple" placements="E,W,N,S,E,NW,NE,SE,SW" size="12"><![CDATA[[num]]]></TextSymbolizer>
-    </Rule>
-    <Rule>
-      <MaxScaleDenominator>5000</MaxScaleDenominator>
-      <MinScaleDenominator>1500</MinScaleDenominator>
-      <Filter><![CDATA[([numero] = 0)]]></Filter>
-      <MarkersSymbolizer allow-overlap="true" fill="#808080" ignore-placement="true" stroke-width="0" width="4" />
-      <TextSymbolizer dx="4" dy="-4" face-name="DejaVu Sans Mono Oblique" fill="#808080" halo-radius="1" placement-type="simple" placements="E,W,N,S,E,NW,NE,SE,SW" size="10"><![CDATA[[num]]]></TextSymbolizer>
-    </Rule>
-    <Rule>
-      <MaxScaleDenominator>50000</MaxScaleDenominator>
-      <MinScaleDenominator>5000</MinScaleDenominator>
-      <Filter><![CDATA[([numero] = 0)]]></Filter>
-      <MarkersSymbolizer allow-overlap="true" fill="#808080" ignore-placement="true" stroke-width="0" width="4" />
-    </Rule>
-    <Rule>
-      <MaxScaleDenominator>1500</MaxScaleDenominator>
       <Filter><![CDATA[([numero] > 5000) and ([fantoir] = '')]]></Filter>
       <MarkersSymbolizer allow-overlap="true" fill="#808080" ignore-placement="true" stroke-width="0" width="6" />
       <TextSymbolizer dx="4" dy="-4" face-name="DejaVu Sans Mono Oblique" fill="#808080" halo-radius="1" placement-type="simple" placements="E,W,N,S,E,NW,NE,SE,SW" size="12"><![CDATA[[num]]]></TextSymbolizer>
@@ -124,6 +86,44 @@
       <MaxScaleDenominator>50000</MaxScaleDenominator>
       <MinScaleDenominator>5000</MinScaleDenominator>
       <Filter><![CDATA[([numero] > 5000)]]></Filter>
+      <MarkersSymbolizer allow-overlap="true" fill="#808080" ignore-placement="true" stroke-width="0" width="4" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>1500</MaxScaleDenominator>
+      <Filter><![CDATA[([numero] = 0) and ([fantoir] = '')]]></Filter>
+      <MarkersSymbolizer allow-overlap="true" fill="#808080" ignore-placement="true" stroke-width="0" width="6" />
+      <TextSymbolizer dx="4" dy="-4" face-name="DejaVu Sans Mono Oblique" fill="#808080" halo-radius="1" placement-type="simple" placements="E,W,N,S,E,NW,NE,SE,SW" size="12"><![CDATA[[num]]]></TextSymbolizer>
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>5000</MaxScaleDenominator>
+      <MinScaleDenominator>1500</MinScaleDenominator>
+      <Filter><![CDATA[([numero] = 0) and ([fantoir] = '')]]></Filter>
+      <MarkersSymbolizer allow-overlap="true" fill="#808080" ignore-placement="true" stroke-width="0" width="6" />
+      <TextSymbolizer dx="4" dy="-4" face-name="DejaVu Sans Mono Oblique" fill="#808080" halo-radius="1" placement-type="simple" placements="E,W,N,S,E,NW,NE,SE,SW" size="10"><![CDATA[[num]]]></TextSymbolizer>
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>50000</MaxScaleDenominator>
+      <MinScaleDenominator>5000</MinScaleDenominator>
+      <Filter><![CDATA[([numero] = 0) and ([fantoir] = '')]]></Filter>
+      <MarkersSymbolizer allow-overlap="true" fill="#808080" ignore-placement="true" stroke-width="0" width="6" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>1500</MaxScaleDenominator>
+      <Filter><![CDATA[([numero] = 0)]]></Filter>
+      <MarkersSymbolizer allow-overlap="true" fill="#808080" ignore-placement="true" stroke-width="0" width="4" />
+      <TextSymbolizer dx="4" dy="-4" face-name="DejaVu Sans Mono Oblique" fill="#808080" halo-radius="1" placement-type="simple" placements="E,W,N,S,E,NW,NE,SE,SW" size="12"><![CDATA[[num]]]></TextSymbolizer>
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>5000</MaxScaleDenominator>
+      <MinScaleDenominator>1500</MinScaleDenominator>
+      <Filter><![CDATA[([numero] = 0)]]></Filter>
+      <MarkersSymbolizer allow-overlap="true" fill="#808080" ignore-placement="true" stroke-width="0" width="4" />
+      <TextSymbolizer dx="4" dy="-4" face-name="DejaVu Sans Mono Oblique" fill="#808080" halo-radius="1" placement-type="simple" placements="E,W,N,S,E,NW,NE,SE,SW" size="10"><![CDATA[[num]]]></TextSymbolizer>
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>50000</MaxScaleDenominator>
+      <MinScaleDenominator>5000</MinScaleDenominator>
+      <Filter><![CDATA[([numero] = 0)]]></Filter>
       <MarkersSymbolizer allow-overlap="true" fill="#808080" ignore-placement="true" stroke-width="0" width="4" />
     </Rule>
     <Rule>
@@ -498,7 +498,7 @@
     SUBSTRING(fantoir,1,1) as fant
   FROM cumul_adresses
   WHERE source != 'CADASTRE'
-  AND substring(fantoir,6,1)<='9'
+  AND (substring(fantoir,6,1)<='9' OR voie_osm != '')
   ORDER BY voie_o desc, source
 ) as addr]]></Parameter>
       <Parameter name="geometry_field"><![CDATA[geometrie]]></Parameter>
@@ -528,24 +528,24 @@
     <Rule>
       <MaxScaleDenominator>200000</MaxScaleDenominator>
       <MinScaleDenominator>100000</MinScaleDenominator>
-      <Filter><![CDATA[([cadastre] > 0) and ([format_cadastre] != 'VECT')]]></Filter>
+      <Filter><![CDATA[([cadastre] > 0) and ([nom_com] = null)]]></Filter>
       <TextSymbolizer allow-overlap="true" face-name="DejaVu Sans Condensed" halo-radius="2" size="12"><![CDATA[[pourcent]+'%']]></TextSymbolizer>
     </Rule>
     <Rule>
       <MaxScaleDenominator>100000</MaxScaleDenominator>
-      <Filter><![CDATA[([cadastre] > 0) and ([format_cadastre] != 'VECT')]]></Filter>
+      <Filter><![CDATA[([cadastre] > 0) and ([nom_com] = null)]]></Filter>
       <LineSymbolizer stroke="#ffffff" stroke-dasharray="4, 8" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.75" stroke-width="3" />
       <TextSymbolizer allow-overlap="true" dy="-0.1" face-name="DejaVu Sans Condensed" fill="#808080" halo-radius="3" size="14"><![CDATA[[insee]+' - '+[nom_com]+'\ncadastre non vectoriel']]></TextSymbolizer>
     </Rule>
     <Rule>
       <MaxScaleDenominator>200000</MaxScaleDenominator>
       <MinScaleDenominator>100000</MinScaleDenominator>
-      <Filter><![CDATA[([cadastre] > 0) and ([nom_com] = null)]]></Filter>
+      <Filter><![CDATA[([cadastre] > 0) and ([format_cadastre] != 'VECT')]]></Filter>
       <TextSymbolizer allow-overlap="true" face-name="DejaVu Sans Condensed" halo-radius="2" size="12"><![CDATA[[pourcent]+'%']]></TextSymbolizer>
     </Rule>
     <Rule>
       <MaxScaleDenominator>100000</MaxScaleDenominator>
-      <Filter><![CDATA[([cadastre] > 0) and ([nom_com] = null)]]></Filter>
+      <Filter><![CDATA[([cadastre] > 0) and ([format_cadastre] != 'VECT')]]></Filter>
       <LineSymbolizer stroke="#ffffff" stroke-dasharray="4, 8" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.75" stroke-width="3" />
       <TextSymbolizer allow-overlap="true" dy="-0.1" face-name="DejaVu Sans Condensed" fill="#808080" halo-radius="3" size="14"><![CDATA[[insee]+' - '+[nom_com]+'\ncadastre non vectoriel']]></TextSymbolizer>
     </Rule>
@@ -563,13 +563,13 @@
     </Rule>
     <Rule>
       <MaxScaleDenominator>100000</MaxScaleDenominator>
-      <Filter><![CDATA[([format_cadastre] != 'VECT')]]></Filter>
+      <Filter><![CDATA[([nom_com] = null)]]></Filter>
       <LineSymbolizer stroke="#ffffff" stroke-dasharray="4, 8" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.75" stroke-width="3" />
       <TextSymbolizer allow-overlap="true" dy="-0.1" face-name="DejaVu Sans Condensed" fill="#808080" halo-radius="3" size="14"><![CDATA[[insee]+' - '+[nom_com]+'\ncadastre non vectoriel']]></TextSymbolizer>
     </Rule>
     <Rule>
       <MaxScaleDenominator>100000</MaxScaleDenominator>
-      <Filter><![CDATA[([nom_com] = null)]]></Filter>
+      <Filter><![CDATA[([format_cadastre] != 'VECT')]]></Filter>
       <LineSymbolizer stroke="#ffffff" stroke-dasharray="4, 8" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.75" stroke-width="3" />
       <TextSymbolizer allow-overlap="true" dy="-0.1" face-name="DejaVu Sans Condensed" fill="#808080" halo-radius="3" size="14"><![CDATA[[insee]+' - '+[nom_com]+'\ncadastre non vectoriel']]></TextSymbolizer>
     </Rule>
@@ -954,14 +954,14 @@ GROUP BY 2,3,4 ) as manque_ban]]></Parameter>
     </Rule>
     <Rule>
       <MaxScaleDenominator>100000</MaxScaleDenominator>
-      <Filter><![CDATA[([format_cadastre] != 'VECT')]]></Filter>
+      <Filter><![CDATA[([nom] = null)]]></Filter>
       <LineSymbolizer stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.75" stroke-width="2" />
       <LineSymbolizer stroke="#ffffff" stroke-dasharray="4, 8" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.75" stroke-width="3" />
       <TextSymbolizer allow-overlap="true" face-name="DejaVu Sans Condensed" fill="#808080" halo-radius="3" size="14"><![CDATA[[insee]+' - '+[nom]+'\ncadastre non vectoriel']]></TextSymbolizer>
     </Rule>
     <Rule>
       <MaxScaleDenominator>100000</MaxScaleDenominator>
-      <Filter><![CDATA[([nom] = null)]]></Filter>
+      <Filter><![CDATA[([format_cadastre] != 'VECT')]]></Filter>
       <LineSymbolizer stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.75" stroke-width="2" />
       <LineSymbolizer stroke="#ffffff" stroke-dasharray="4, 8" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.75" stroke-width="3" />
       <TextSymbolizer allow-overlap="true" face-name="DejaVu Sans Condensed" fill="#808080" halo-radius="3" size="14"><![CDATA[[insee]+' - '+[nom]+'\ncadastre non vectoriel']]></TextSymbolizer>
@@ -1046,14 +1046,8 @@ GROUP BY 2,3,4 ) as manque_ban]]></Parameter>
       <TextSymbolizer allow-overlap="true" face-name="DejaVu Sans Mono Bold" fill="#800080" halo-radius="1" size="12" wrap-width="40"><![CDATA[[libelle_osm]+'\n'+[fantoir]]]></TextSymbolizer>
     </Rule>
     <Rule>
-      <MaxScaleDenominator>12500</MaxScaleDenominator>
-      <MinScaleDenominator>5000</MinScaleDenominator>
-      <Filter><![CDATA[([source] = 'OSM') and ([fantoir] = '') and ([ld_bati] = 0)]]></Filter>
-      <TextSymbolizer allow-overlap="true" face-name="DejaVu Sans Mono Bold" fill="#800080" halo-radius="1" size="12" wrap-width="40"><![CDATA[[libelle_osm]]]></TextSymbolizer>
-    </Rule>
-    <Rule>
       <MaxScaleDenominator>25000</MaxScaleDenominator>
-      <MinScaleDenominator>12500</MinScaleDenominator>
+      <MinScaleDenominator>5000</MinScaleDenominator>
       <Filter><![CDATA[([source] = 'OSM') and ([fantoir] = '') and ([ld_bati] = 0)]]></Filter>
       <TextSymbolizer allow-overlap="true" face-name="DejaVu Sans Mono Bold" fill="#800080" halo-radius="1" size="12" wrap-width="40"><![CDATA[[libelle_osm]]]></TextSymbolizer>
     </Rule>
@@ -1080,14 +1074,8 @@ GROUP BY 2,3,4 ) as manque_ban]]></Parameter>
       <TextSymbolizer allow-overlap="true" face-name="DejaVu Sans Mono Bold" fill="#00aa00" halo-radius="1" size="12" wrap-width="40"><![CDATA[[libelle_osm]+'\n'+[fantoir]]]></TextSymbolizer>
     </Rule>
     <Rule>
-      <MaxScaleDenominator>12500</MaxScaleDenominator>
-      <MinScaleDenominator>5000</MinScaleDenominator>
-      <Filter><![CDATA[([source] = 'OSM') and ([ld_bati] = 0)]]></Filter>
-      <TextSymbolizer allow-overlap="true" face-name="DejaVu Sans Mono Bold" fill="#00aa00" halo-radius="1" size="12" wrap-width="40"><![CDATA[[libelle_osm]]]></TextSymbolizer>
-    </Rule>
-    <Rule>
       <MaxScaleDenominator>25000</MaxScaleDenominator>
-      <MinScaleDenominator>12500</MinScaleDenominator>
+      <MinScaleDenominator>5000</MinScaleDenominator>
       <Filter><![CDATA[([source] = 'OSM') and ([ld_bati] = 0)]]></Filter>
       <TextSymbolizer allow-overlap="true" face-name="DejaVu Sans Mono Bold" fill="#00aa00" halo-radius="1" size="12" wrap-width="40"><![CDATA[[libelle_osm]]]></TextSymbolizer>
     </Rule>
