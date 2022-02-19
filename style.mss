@@ -169,14 +169,16 @@ Map { buffer-size: 256; }
   line-join: round;
   line-cap: round;
   line-opacity: 0.25;
-  text-name: [voie_ban]+[voie_osm];
-  text-face-name: @font;
-  text-allow-overlap: false;
-  text-placement: line;
-  text-spacing: 100;
-  text-fill: red;
-  text-size: 12;
-  text-dy: 20;
+  [nb>2] {
+    text-name: [voie_ban]+[voie_osm];
+    text-face-name: @font;
+    text-allow-overlap: false;
+    text-placement: line;
+    text-spacing: 100;
+    text-fill: red;
+    text-size: 12;
+    text-dy: 20;
+  }
 
   b/text-name: [voie_ban];
   b/text-face-name: @font;
@@ -195,7 +197,7 @@ Map { buffer-size: 256; }
   }
 
   [source='OSM'] /* OSM */ {
-    text-fill: purple;
+    [nb>2] { text-fill: purple; }
     line-color: purple;
     b/text-fill: purple;
     b/text-dy: 0;
@@ -204,7 +206,7 @@ Map { buffer-size: 256; }
 
   /* libellé rue et erreur signalée affichés en gris */
   [label_statut!=''] {
-    text-fill: grey;
+    [nb>2] { text-fill: grey; }
     b/text-fill: grey;
     line-color: grey;
     [zoom>=17] { b/text-name: [voie_ban]+"\n"+[fantoir]+"\n("+[label_statut]+")"; }
@@ -292,14 +294,16 @@ Map { buffer-size: 256; }
   line-join: round;
   line-cap: round;
   line-opacity: 0.5;
-  text-name: [nom_voie];
-  text-face-name: @oblique;
-  text-allow-overlap: false;
-  text-placement: line;
-  text-spacing: 100;
-  text-fill: red;
-  text-size: 12;
-  text-dy: 20;
+  [nb>2] {
+    text-name: [nom_voie];
+    text-face-name: @oblique;
+    text-allow-overlap: false;
+    text-placement: line;
+    text-spacing: 100;
+    text-fill: red;
+    text-size: 12;
+    text-dy: 20;
+  }
   b/text-name: [nom_voie]+'\n**'+[fant_voie]+'**';
   b/text-face-name: @oblique;
   b/text-allow-overlap: true;
@@ -311,13 +315,15 @@ Map { buffer-size: 256; }
   [fant_voie=''] {
     b/text-name: [nom_voie];
     line-color: grey;
-    text-fill: grey;
+    [nb>2] {text-fill: grey;}
     b/text-fill: grey;
   }
   [zoom>=18] {
-    text-size: 16;
     b/text-size: 16;
-    text-halo-radius: 1;
-    text-halo-fill: fadeout(white,50%);
+    [nb>2] {
+      text-size: 16;
+      text-halo-radius: 1;
+      text-halo-fill: fadeout(white,50%);
+    }
   }
 }
