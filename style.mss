@@ -27,9 +27,8 @@ Map { buffer-size: 256; }
 	[zoom>=12] {marker-width: 1; [source='BAN'][voie_o='']{marker-width: 1.5;}}
 	[zoom>=13] {marker-width: 2; [source='BAN'][voie_o='']{marker-width: 3;}}
 	[zoom>=14] {marker-width: 3; [source='BAN'][voie_o='']{marker-width: 4;}}
-	[zoom>=15] { opacity: 1; marker-width: 5; [source='CAD'][voie_o='']{marker-width: 7;}}
+	[zoom>=15] { opacity: 1; marker-width: 5; [source='BAN'][voie_o='']{marker-width: 7;}}
   [zoom>=18] {
-    marker-width: 4;
     /* rendu du numéro aux plus forts zooms */
     /* couleur du numéro */
     [source='OSM'] /* OSM */ {
@@ -164,14 +163,11 @@ Map { buffer-size: 256; }
 #manque [zoom>=16] {
   polygon-clip: false;
   polygon-opacity: 0;
-  polygon-smooth: 0.5;
   line-color: red;
   line-width: 10;
   line-clip: false;
   line-join: round;
   line-cap: round;
-  line-smooth: 0.5;
-  line-offset: 10;
   line-opacity: 0.25;
   text-name: [voie_ban]+[voie_osm];
   text-face-name: @font;
@@ -289,15 +285,12 @@ Map { buffer-size: 256; }
 #manque_ban [zoom>=16] {
   polygon-clip: false;
   polygon-opacity: 0;
-  polygon-smooth: 0.5;
   line-color: red;
   line-dasharray: 6,16;
   line-width: 8;
   line-clip: false;
   line-join: round;
   line-cap: round;
-  line-smooth: 0.5;
-  line-offset: 10;
   line-opacity: 0.5;
   text-name: [nom_voie];
   text-face-name: @oblique;

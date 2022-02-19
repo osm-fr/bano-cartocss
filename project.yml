@@ -117,7 +117,7 @@ Layer:
       <<: *banodb
       table: >-
         (SELECT
-          st_convexhull(st_collect(b.geometrie)) as geom,
+          st_buffer(st_convexhull(st_collect(b.geometrie)), 20 * !pixel_width!) as geom,
           b.nom_voie,
           coalesce(b.code_insee||SUBSTRING(UPPER(b.id_fantoir)||'xxxxxxxxxx',7,4)||f.cle_rivoli,'') as fant_voie,
           b.code_insee,
@@ -146,7 +146,7 @@ Layer:
       <<: *banodb
       table: >-
         (
-          SELECT st_convexhull(st_collect(cu.geometrie)) as geometrie,
+          SELECT st_buffer(st_convexhull(st_collect(cu.geometrie)), 20 * !pixel_width!) as geometrie,
             cu.fantoir,
             cu.voie_autre as voie_ban,
             coalesce(cu.voie_osm,'') as voie_osm,
