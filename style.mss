@@ -327,3 +327,23 @@ Map { buffer-size: 256; }
     }
   }
 }
+
+
+#voie_nommee {
+    line-color: magenta;
+    name/text-clip: true;
+    name/text-name: "[nom]";
+    name/text-size: 12;
+    name/text-fill: magenta;
+    name/text-dy: 0;
+    name/text-face-name: @font;
+    name/text-halo-radius: 1.5;
+    name/text-placement: line;
+    [qualite != 'OK'] {
+        name/text-face-name: @oblique;
+        name/text-name: "¿¿ "+[nom]+" ??";
+    }
+    [zoom > 18] {
+      name/text-size: 15;
+    }
+}

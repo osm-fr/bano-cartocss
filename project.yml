@@ -37,7 +37,21 @@ _parts:
     extent: "-180,-85,180,85"
     srid: 4326
     asynchronous_request: 'true'
-    max_async_connection: '4'
+    max_async_connection: 4
+    max_size: 24
+    connect_timeout: 10
+  bdtopo: &bdtopo
+    type: "postgis"
+    dbname: "osm"
+    host: "localhost"
+    user: "fr"
+    password: "m4d31nfr4nc3"
+    extent: "-180,-85,180,85"
+    srid: 4326
+    asynchronous_request: 'true'
+    max_async_connection: 4
+    max_size: 24
+    connect_timeout: 10
 
 
 Stylesheet:
@@ -108,6 +122,25 @@ Layer:
           GROUP BY co.insee_com, ca.nom_com, co.geometrie, format_cadastre
         ) as addr_lz
       geometry_field: geometrie
+
+
+  - id: voie_nommee
+    <<: *extents84
+    Datasource:
+      <<: *bdtopo
+      table: >-
+        (
+          SELECT
+            r.geometrie,
+            regexp_replace(regexp_replace(regexp_replace(initcap(nom_minuscule),E' L(e |a |es |\x27)',' l\1','g'),E' D(e |u |es |\x27)',' d\1','g'),' A(|u|ux) ',' a\1 ','g') as nom,
+            r.qualite_passage_maj_min as qualite,
+            r.id_pseudo_fpb
+          FROM
+            bdtopo_voie_nommee r
+          WHERE
+            r.validite
+        ) as troncon_de_route
+
 
   - id: manque_ban
     name: manque_ban
