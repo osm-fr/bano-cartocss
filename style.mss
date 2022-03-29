@@ -329,7 +329,7 @@ Map { buffer-size: 256; }
 }
 
 
-#voie_nommee {
+#voie_nommee [zoom>=16] {
     line-color: magenta;
     name/text-clip: true;
     name/text-name: "[nom]";
