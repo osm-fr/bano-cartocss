@@ -189,7 +189,7 @@ Map { buffer-size: 256; }
   b/text-halo-fill: fadeout(white,50%);
   b/text-dy: 8; // décallage si pas assez de points pour avoir une surface (pour voir les points)
   [zoom>=17] {
-    b/text-name: [voie_ban]+"\n"+[fantoir]+" ("+[nb]+")";
+    b/text-name: [voie_ban]+"\n"+[fantoir]+" ("+[nb]+")\nsrc: "+[source];
     b/text-character-spacing: 1;
   }
   [zoom>=18] {
