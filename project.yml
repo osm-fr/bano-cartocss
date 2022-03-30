@@ -184,7 +184,7 @@ Layer:
             cu.voie_autre as voie_ban,
             coalesce(cu.voie_osm,'') as voie_osm,
             count(*) as nb,
-            coalesce(b.source_nom_voie,cu.source) as source,
+            replace(coalesce(b.source_nom_voie,cu.source),'inconnue','BAN') as source,
             l.label_statut
           FROM polygones_insee_geo co
           JOIN cumul_adresses cu on (cu.insee_com=co.insee_com
